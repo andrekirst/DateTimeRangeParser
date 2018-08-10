@@ -2,11 +2,11 @@
 {
     public interface IDateTimeRangeCalculator
     {
-        IDateTimeProvider DateTimeProvider { get; }
+        IDateTimeProvider DateTimeProvider { get; set; }
 
         string Name { get; }
 
-        string DetectionRegexPattern { get; }
+        bool DoesMatchInput(string input);
 
         DateTimeRange CalculateFromInput(string input = "");
     }

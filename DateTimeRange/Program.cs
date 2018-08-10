@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DateTimeRange.DateTimeRangeCalculators;
 
 namespace DateTimeRange
@@ -13,8 +11,8 @@ namespace DateTimeRange
 
             List<IDateTimeRangeCalculator> calculators = new List<IDateTimeRangeCalculator>
             {
-                new TodayCalculator(dateTimeProvider: defaultDateTimeProvider),
-                new CalendarWeekCalculator(dateTimeProvider: defaultDateTimeProvider)
+                new TodayCalculator(),
+                new CalendarWeekCalculator()
                 /*,
                 new YesterdayCalculator(dateTimeProvider: defaultDateTimeProvider),
                 new LastWeekCalculator(dateTimeProvider: defaultDateTimeProvider),
@@ -29,8 +27,8 @@ namespace DateTimeRange
 
             // range=Yesterday => er weiß, welche Implementation ist (Static) -> OK
 
-            RangeExtractor2 rangeExctractor2 = new RangeExtractor2(
-                dateTimeSource: defaultDateTimeProvider,
+            RangeExtractor rangeExctractor2 = new RangeExtractor(
+                dateTimeProvider: defaultDateTimeProvider,
                 calculators: calculators);
 
             var range = rangeExctractor2.GenerateDateTimeRangeFromInput("CW3.2018");

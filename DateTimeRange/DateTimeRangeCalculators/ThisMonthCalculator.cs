@@ -18,15 +18,14 @@ namespace DateTimeRange.DateTimeRangeCalculators
         //    };
         //}
 
-        public ThisMonthCalculator(IDateTimeProvider dateTimeProvider)
+        public IDateTimeProvider DateTimeProvider { get; set; }
+        public string Name => "ThisMonth";
+        public DateTimeRange CalculateFromInput(string input)
         {
-            DateTimeProvider = dateTimeProvider;
+            throw new NotImplementedException();
         }
 
-        public IDateTimeProvider DateTimeProvider { get; }
-        public string Name => "ThisMonth";
-        public string DetectionRegexPattern { get; }
-        public DateTimeRange CalculateFromInput(string input)
+        public bool DoesMatchInput(string input)
         {
             throw new NotImplementedException();
         }

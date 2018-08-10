@@ -15,15 +15,16 @@ namespace DateTimeRange.DateTimeRangeCalculators
         //    };
         //}
 
-        public ThisYearCalculator(IDateTimeProvider dateTimeProvider)
+        public IDateTimeProvider DateTimeProvider { get; set; }
+
+        public string Name => "ThisYear";
+
+        public DateTimeRange CalculateFromInput(string input)
         {
-            DateTimeProvider = dateTimeProvider;
+            throw new NotImplementedException();
         }
 
-        public IDateTimeProvider DateTimeProvider { get; }
-        public string Name => "ThisYear";
-        public string DetectionRegexPattern { get; }
-        public DateTimeRange CalculateFromInput(string input)
+        public bool DoesMatchInput(string input)
         {
             throw new NotImplementedException();
         }

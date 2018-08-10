@@ -1,58 +1,42 @@
-﻿using System;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace DateTimeRange
 {
     public class RangeExtractor
     {
-        private readonly IDateTimeProvider _dateTime;
+        private readonly List<IDateTimeRangeCalculator> _calculators =
+            new List<IDateTimeRangeCalculator>();
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public RangeExtractor(IDateTimeProvider dateTime)
+        public RangeExtractor(
+            IDateTimeProvider dateTimeProvider,
+            IEnumerable<IDateTimeRangeCalculator> calculators)
         {
-            _dateTime = dateTime;
+            _dateTimeProvider = dateTimeProvider;
+            AddCalculators(calculators: calculators);
+        }
+
+        private void AddCalculators(IEnumerable<IDateTimeRangeCalculator> calculators)
+        {
+            foreach (IDateTimeRangeCalculator calculator in calculators)
+            {
+                calculator.DateTimeProvider = _dateTimeProvider;
+            }
+            _calculators.AddRange(collection: calculators);
         }
 
         public DateTimeRange GenerateDateTimeRangeFromInput(string input)
         {
-            switch (input)
-            {
-                case "Yesterday":
-                    {
-                        return GetRangeForYesterday();
-                    }
-                case "LastWeek":
-                    {
-                        return GetRangeForLastWeek();
-                    }
-            }
-
-            throw new NotImplementedException();
+            return _calculators
+                .FirstOrDefault(predicate: c => c.DoesMatchInput(input: input))
+                .CalculateFromInput(input: input);
         }
 
-        private DateTimeRange GetRangeForLastWeek()
-        {
-            DateTime start = _dateTime
-                .Today
-                .AddDays(value: -(int)_dateTime.Today.DayOfWeek + 1 - 7);
-            DateTime end = _dateTime
-                .Today
-                .AddDays(value: 7 % (int)_dateTime.Today.DayOfWeek - 7);
-
-            return new DateTimeRange
-            {
-                Start = start,
-                End = end
-            };
-        }
-
-        private DateTimeRange GetRangeForYesterday()
-        {
-            DateTime dateTime = _dateTime.Today.AddDays(value: -1);
-
-            return new DateTimeRange
-            {
-                Start = dateTime,
-                End = dateTime
-            };
-        }
+        public IReadOnlyCollection<string> ImplementedCalculatorNames
+            => _calculators
+                .Select(selector: s => s.Name)
+                .ToList()
+                .AsReadOnly();
     }
 }

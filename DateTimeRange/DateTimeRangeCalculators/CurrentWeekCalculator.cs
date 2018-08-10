@@ -20,15 +20,16 @@ namespace DateTimeRange.DateTimeRangeCalculators
         //    };
         //}
 
-        public CurrentWeekCalculator(IDateTimeProvider dateTimeProvider)
+        public IDateTimeProvider DateTimeProvider { get; set; }
+
+        public string Name => "CurrentWeek";
+
+        public DateTimeRange CalculateFromInput(string input)
         {
-            DateTimeProvider = dateTimeProvider;
+            throw new NotImplementedException();
         }
 
-        public IDateTimeProvider DateTimeProvider { get; }
-        public string Name => "CurrentWeek";
-        public string DetectionRegexPattern { get; }
-        public DateTimeRange CalculateFromInput(string input)
+        public bool DoesMatchInput(string input)
         {
             throw new NotImplementedException();
         }

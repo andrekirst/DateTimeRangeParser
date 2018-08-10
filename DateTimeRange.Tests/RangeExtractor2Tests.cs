@@ -46,7 +46,7 @@ namespace DateTimeRange.Tests
                 .SetupGet(m => m.Today)
                 .Returns(new DateTime(1986, 4, 11));
 
-            RangeExtractor2 rangeExtractor2 = new RangeExtractor2(
+            RangeExtractor rangeExtractor2 = new RangeExtractor(
                 dateTimeSource: _mockDateTimeSource.Object,
                 calculators: calculators);
 
@@ -68,7 +68,7 @@ namespace DateTimeRange.Tests
                 .SetupGet(m => m.Today)
                 .Returns(new DateTime(1986, 4, 11));
 
-            RangeExtractor2 rangeExtractor2 = new RangeExtractor2(
+            RangeExtractor rangeExtractor2 = new RangeExtractor(
                 dateTimeSource: _mockDateTimeSource.Object,
                 calculators: calculators);
 

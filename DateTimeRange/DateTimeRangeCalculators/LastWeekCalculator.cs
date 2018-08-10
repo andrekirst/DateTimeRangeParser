@@ -25,10 +25,14 @@ namespace DateTimeRange.DateTimeRangeCalculators
             DateTimeProvider = dateTimeProvider;
         }
 
-        public IDateTimeProvider DateTimeProvider { get; }
+        public IDateTimeProvider DateTimeProvider { get; set; }
         public string Name => "LastWeek";
-        public string DetectionRegexPattern { get; }
         public DateTimeRange CalculateFromInput(string input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DoesMatchInput(string input)
         {
             throw new NotImplementedException();
         }
