@@ -17,9 +17,10 @@ namespace DateTimeRange.Tests
                 DateTimeProvider = dateTimeProvider;
             }
 
-            public IDateTimeProvider DateTimeProvider { get; }
+            public IDateTimeProvider DateTimeProvider { get; set; }
+
             public string Name => "Today";
-            public string DetectionRegexPattern { get; }
+
             public DateTimeRange CalculateFromInput(string input)
             {
                 return new DateTimeRange
@@ -27,6 +28,11 @@ namespace DateTimeRange.Tests
                     Start = new DateTime(year: 1986, month: 4, day: 11),
                     End = new DateTime(year: 1986, month: 4, day: 11)
                 };
+            }
+
+            public bool DoesMatchInput(string input)
+            {
+                throw new NotImplementedException();
             }
         }
 
