@@ -5,21 +5,21 @@ namespace DateTimeRange
 {
     public class RangeExtractor
     {
-        private readonly List<IDateTimeRangeCalculator> _calculators =
-            new List<IDateTimeRangeCalculator>();
+        private readonly List<DateTimeRangeCalculatorBase> _calculators =
+            new List<DateTimeRangeCalculatorBase>();
         private readonly IDateTimeProvider _dateTimeProvider;
 
         public RangeExtractor(
             IDateTimeProvider dateTimeProvider,
-            IEnumerable<IDateTimeRangeCalculator> calculators)
+            IEnumerable<DateTimeRangeCalculatorBase> calculators)
         {
             _dateTimeProvider = dateTimeProvider;
             AddCalculators(calculators: calculators);
         }
 
-        private void AddCalculators(IEnumerable<IDateTimeRangeCalculator> calculators)
+        private void AddCalculators(IEnumerable<DateTimeRangeCalculatorBase> calculators)
         {
-            foreach (IDateTimeRangeCalculator calculator in calculators)
+            foreach (DateTimeRangeCalculatorBase calculator in calculators)
             {
                 calculator.DateTimeProvider = _dateTimeProvider;
             }

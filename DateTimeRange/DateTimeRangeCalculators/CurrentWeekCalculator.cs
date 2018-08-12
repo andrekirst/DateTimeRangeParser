@@ -2,36 +2,27 @@
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class CurrentWeekCalculator : IDateTimeRangeCalculator
+    public class CurrentWeekCalculator : DateTimeRangeCalculatorBase
     {
-        //public string RangeSelectorName => "CurrentWeek";
+        public override string Name => "CurrentWeek";
 
-        //public DateTimeRange CalculateToRelatedDateTime(DateTime dateTime)
-        //{
-        //    DateTime start = dateTime
-        //            .AddDays(value: -(int)dateTime.DayOfWeek + 1);
-        //    DateTime end = dateTime
-        //        .AddDays(value: 7 % (int)dateTime.DayOfWeek);
-
-        //    return new DateTimeRange
-        //    {
-        //        Start = start,
-        //        End = end
-        //    };
-        //}
-
-        public IDateTimeProvider DateTimeProvider { get; set; }
-
-        public string Name => "CurrentWeek";
-
-        public DateTimeRange CalculateFromInput(string input)
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
-            throw new NotImplementedException();
+            DateTime today = DateTimeProvider.Today;
+
+            DateTime start = today.AddDays(value: -(int)today.DayOfWeek + 1);
+            DateTime end = today.AddDays(value: 7 % (int)today.DayOfWeek);
+
+            return new DateTimeRange
+            {
+                Start = start,
+                End = end
+            };
         }
 
-        public bool DoesMatchInput(string input)
+        public override bool DoesMatchInput(string input)
         {
-            throw new NotImplementedException();
+            return ToLowerInputMatch(input, "currentweek");
         }
     }
 }

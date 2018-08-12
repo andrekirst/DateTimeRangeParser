@@ -2,31 +2,26 @@
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class ThisYearCalculator : IDateTimeRangeCalculator
+    public class ThisYearCalculator : DateTimeRangeCalculatorBase
     {
-        //public string RangeSelectorName => "ThisYear";
+        public override string Name => "ThisYear";
 
-        //public DateTimeRange CalculateToRelatedDateTime(DateTime dateTime)
-        //{
-        //    return new DateTimeRange
-        //    {
-        //        Start = new DateTime(year: dateTime.Year, month: 1, day: 1),
-        //        End = new DateTime(year: dateTime.Year, month: 12, day: 31)
-        //    };
-        //}
-
-        public IDateTimeProvider DateTimeProvider { get; set; }
-
-        public string Name => "ThisYear";
-
-        public DateTimeRange CalculateFromInput(string input)
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
-            throw new NotImplementedException();
+            DateTime today = DateTimeProvider.Today;
+
+            return new DateTimeRange
+            {
+                Start = new DateTime(year: today.Year, month: 1, day: 1),
+                End = new DateTime(year: today.Year, month: 12, day: 31)
+            };
         }
 
-        public bool DoesMatchInput(string input)
+        public override bool DoesMatchInput(string input)
         {
-            throw new NotImplementedException();
+            return ToLowerInputMatch(
+                input: input,
+                match: "thisyear");
         }
     }
 }

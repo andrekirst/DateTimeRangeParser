@@ -1,19 +1,33 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using DateTimeRange.Extensions;
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class CalendarWeekCalculator : IDateTimeRangeCalculator
+    public class CalendarWeekCalculator : DateTimeRangeCalculatorBase
     {
-        public IDateTimeProvider DateTimeProvider { get; set; }
+        public override string Name => "CalendarWeek";
 
-        public string Name => "CalendarWeek";
-
-        public DateTimeRange CalculateFromInput(string input)
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
-            throw new System.NotImplementedException();
+            string[] splitByPoint = input?.Split('.');
+            int weekNumber = int.Parse(s: splitByPoint[0].Substring(2));
+            int yearNumber = int.Parse(s: splitByPoint[1]);
+
+            DateTime firstDayOfYear = new DateTime(yearNumber, 1, 1);
+
+            DateTime firstMonday = firstDayOfYear.GetFirstMondayOfYear();
+            DateTime firstMondayPlusCountOfWeeks = firstMonday.AddDays(7 * (weekNumber - 1));
+
+            return new DateTimeRange
+            {
+                Start = firstMondayPlusCountOfWeeks,
+                End = firstMondayPlusCountOfWeeks.AddDays(6)
+            };
         }
 
-        public bool DoesMatchInput(string input)
+        public override bool DoesMatchInput(string input)
         {
             return Regex.IsMatch(
                 input: input,

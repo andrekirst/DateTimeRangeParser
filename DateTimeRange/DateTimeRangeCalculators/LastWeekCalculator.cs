@@ -2,39 +2,25 @@
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class LastWeekCalculator : IDateTimeRangeCalculator
+    public class LastWeekCalculator : DateTimeRangeCalculatorBase
     {
-        //public string RangeSelectorName => "LastWeek";
+        public override string Name => "LastWeek";
 
-        //public DateTimeRange CalculateToRelatedDateTime(DateTime dateTime)
-        //{
-        //    DateTime start = dateTime
-        //            .AddDays(value: -(int)dateTime.DayOfWeek + 1 - 7);
-        //    DateTime end = dateTime
-        //        .AddDays(value: 7 % (int)dateTime.DayOfWeek - 7);
-
-        //    return new DateTimeRange
-        //    {
-        //        Start = start,
-        //        End = end
-        //    };
-        //}
-
-        public LastWeekCalculator(IDateTimeProvider dateTimeProvider)
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
-            DateTimeProvider = dateTimeProvider;
+            DateTime start = Today.AddDays(value: -(int)Today.DayOfWeek + 1 - 7);
+            DateTime end = Today.AddDays(value: 7 % (int)Today.DayOfWeek - 7);
+
+            return new DateTimeRange
+            {
+                Start = start,
+                End = end
+            };
         }
 
-        public IDateTimeProvider DateTimeProvider { get; set; }
-        public string Name => "LastWeek";
-        public DateTimeRange CalculateFromInput(string input)
+        public override bool DoesMatchInput(string input)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool DoesMatchInput(string input)
-        {
-            throw new NotImplementedException();
+            return ToLowerInputMatch(input, "lastweek");
         }
     }
 }

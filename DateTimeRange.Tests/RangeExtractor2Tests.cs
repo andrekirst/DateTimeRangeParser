@@ -8,20 +8,13 @@ namespace DateTimeRange.Tests
 {
     public class RangeExtractor2Tests
     {
-        private readonly Mock<IDateTimeProvider> _mockDateTimeSource;
+        private readonly Mock<IDateTimeProvider> _mockDateTimeProvider;
 
-        private class MockImplementationTodayCalculator : IDateTimeRangeCalculator
+        private class MockImplementationTodayCalculator : DateTimeRangeCalculatorBase
         {
-            public MockImplementationTodayCalculator(IDateTimeProvider dateTimeProvider)
-            {
-                DateTimeProvider = dateTimeProvider;
-            }
+            public override string Name => "Today";
 
-            public IDateTimeProvider DateTimeProvider { get; set; }
-
-            public string Name => "Today";
-
-            public DateTimeRange CalculateFromInput(string input)
+            public override DateTimeRange CalculateFromInput(string input = "")
             {
                 return new DateTimeRange
                 {
@@ -30,30 +23,34 @@ namespace DateTimeRange.Tests
                 };
             }
 
-            public bool DoesMatchInput(string input)
+            public override bool DoesMatchInput(string input)
             {
-                throw new NotImplementedException();
+                return true;
             }
         }
 
         public RangeExtractor2Tests()
         {
-            _mockDateTimeSource = new Mock<IDateTimeProvider>();
+            _mockDateTimeProvider = new Mock<IDateTimeProvider>();
         }
 
         [Fact]
         public void Test_Execution_Expect_SelectorNames()
         {
-            List<IDateTimeRangeCalculator> calculators = new List<IDateTimeRangeCalculator>
+            List<DateTimeRangeCalculatorBase> calculators = new List<DateTimeRangeCalculatorBase>
             {
-                new MockImplementationTodayCalculator(dateTimeProvider: _mockDateTimeSource.Object)
+                new MockImplementationTodayCalculator
+                {
+                    DateTimeProvider = _mockDateTimeProvider.Object
+                }
             };
-            _mockDateTimeSource
+
+            _mockDateTimeProvider
                 .SetupGet(m => m.Today)
                 .Returns(new DateTime(1986, 4, 11));
 
             RangeExtractor rangeExtractor2 = new RangeExtractor(
-                dateTimeSource: _mockDateTimeSource.Object,
+                dateTimeProvider: _mockDateTimeProvider.Object,
                 calculators: calculators);
 
             ReadOnlyCollection<string> expectedSelectorNames = new List<string> { "Today" }.AsReadOnly();
@@ -65,17 +62,20 @@ namespace DateTimeRange.Tests
         [Fact]
         public void Test_Execution_Expect_Calculation_For_Input()
         {
-            List<IDateTimeRangeCalculator> calculators = new List<IDateTimeRangeCalculator>
+            List<DateTimeRangeCalculatorBase> calculators = new List<DateTimeRangeCalculatorBase>
             {
-                new MockImplementationTodayCalculator(dateTimeProvider: _mockDateTimeSource.Object)
+                new MockImplementationTodayCalculator
+                {
+                    DateTimeProvider = _mockDateTimeProvider.Object
+                }
             };
 
-            _mockDateTimeSource
+            _mockDateTimeProvider
                 .SetupGet(m => m.Today)
                 .Returns(new DateTime(1986, 4, 11));
 
             RangeExtractor rangeExtractor2 = new RangeExtractor(
-                dateTimeSource: _mockDateTimeSource.Object,
+                dateTimeProvider: _mockDateTimeProvider.Object,
                 calculators: calculators);
 
             DateTimeRange actual = rangeExtractor2.GenerateDateTimeRangeFromInput(input: "Today");

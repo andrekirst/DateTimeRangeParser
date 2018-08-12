@@ -2,32 +2,27 @@
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class ThisMonthCalculator : IDateTimeRangeCalculator
+    public class ThisMonthCalculator : DateTimeRangeCalculatorBase
     {
-        //public string RangeSelectorName => "ThisMonth";
+        public override string Name => "ThisMonth";
 
-        //public DateTimeRange CalculateToRelatedDateTime(DateTime dateTime)
-        //{
-        //    DateTime nextMonthSameDay = dateTime.Date.AddMonths(months: 1);
-        //    DateTime end = dateTime.AddMonths(months: 1).AddDays(value: -nextMonthSameDay.Day);
-
-        //    return new DateTimeRange
-        //    {
-        //        Start = dateTime.AddDays(value: -dateTime.Day + 1),
-        //        End = end
-        //    };
-        //}
-
-        public IDateTimeProvider DateTimeProvider { get; set; }
-        public string Name => "ThisMonth";
-        public DateTimeRange CalculateFromInput(string input)
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
-            throw new NotImplementedException();
+            DateTime nextMonthSameDay = Today.Date.AddMonths(months: 1);
+            DateTime end = Today.AddMonths(months: 1).AddDays(value: -nextMonthSameDay.Day);
+
+            return new DateTimeRange
+            {
+                Start = Today.AddDays(value: -Today.Day + 1),
+                End = end
+            };
         }
 
-        public bool DoesMatchInput(string input)
+        public override bool DoesMatchInput(string input)
         {
-            throw new NotImplementedException();
+            return ToLowerInputMatch(
+                input: input,
+                match: "thismonth");
         }
     }
 }

@@ -2,13 +2,11 @@
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class TodayCalculator : IDateTimeRangeCalculator
+    public class TodayCalculator : DateTimeRangeCalculatorBase
     {
-        public IDateTimeProvider DateTimeProvider { get; set; }
+        public override string Name => "Today";
 
-        public string Name => "Today";
-
-        public DateTimeRange CalculateFromInput(string input = "")
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
             return new DateTimeRange
             {
@@ -17,12 +15,11 @@ namespace DateTimeRange.DateTimeRangeCalculators
             };
         }
 
-        public bool DoesMatchInput(string input)
+        public override bool DoesMatchInput(string input)
         {
-            return Regex.IsMatch(
+            return ToLowerInputMatch(
                 input: input,
-                pattern: @"[tT][oO][dD][aA][yY]",
-                options: RegexOptions.Compiled);
+                match: "today");
         }
     }
 }

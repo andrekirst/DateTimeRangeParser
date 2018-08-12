@@ -2,33 +2,26 @@
 
 namespace DateTimeRange.DateTimeRangeCalculators
 {
-    public class YesterdayCalculator : IDateTimeRangeCalculator
+    public class YesterdayCalculator : DateTimeRangeCalculatorBase
     {
-        //public string RangeSelectorName => "Yesterday";
-        //public DateTimeRange CalculateToRelatedDateTime(DateTime dateTime)
-        //{
-        //    DateTime yesterday = dateTime
-        //        .AddDays(value: -1);
+        public override string Name => "Yesterday";
 
-        //    return new DateTimeRange
-        //    {
-        //        Start = yesterday,
-        //        End = yesterday
-        //    };
-        //}
-
-        public IDateTimeProvider DateTimeProvider { get; set; }
-
-        public string Name => "Yesterday";
-
-        public DateTimeRange CalculateFromInput(string input)
+        public override DateTimeRange CalculateFromInput(string input = "")
         {
-            throw new NotImplementedException();
+            DateTime yesterday = DateTimeProvider.Today.AddDays(value: -1);
+
+            return new DateTimeRange
+            {
+                Start = yesterday,
+                End = yesterday
+            };
         }
 
-        public bool DoesMatchInput(string input)
+        public override bool DoesMatchInput(string input)
         {
-            throw new NotImplementedException();
+            return ToLowerInputMatch(
+                input: input,
+                match: "yesterday");
         }
     }
 }
