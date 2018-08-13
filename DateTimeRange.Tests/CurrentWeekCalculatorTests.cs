@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using DateTimeRange.DateTimeRangeCalculators;
 using Moq;
 using Xunit;
