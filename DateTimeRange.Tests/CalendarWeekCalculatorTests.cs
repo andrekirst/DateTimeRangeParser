@@ -1,7 +1,6 @@
 ﻿using DateTimeRange.DateTimeRangeCalculators;
 using Moq;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace DateTimeRange.Tests
@@ -30,8 +29,8 @@ namespace DateTimeRange.Tests
 
             DateTimeRange expected = new DateTimeRange
             {
-                Start = new DateTime(2018, 1, 15),
-                End = new DateTime(2018, 1, 21)
+                Start = new DateTime(year: 2018, month: 1, day: 15),
+                End = new DateTime(year: 2018, month: 1, day: 21)
             };
 
             Assert.Equal(

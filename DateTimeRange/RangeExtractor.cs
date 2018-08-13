@@ -29,8 +29,8 @@ namespace DateTimeRange
         public DateTimeRange GenerateDateTimeRangeFromInput(string input)
         {
             return _calculators
-                .FirstOrDefault(predicate: c => c.DoesMatchInput(input: input))
-                .CalculateFromInput(input: input);
+                ?.FirstOrDefault(predicate: c => c.DoesMatchInput(input: input))
+                ?.CalculateFromInput(input: input);
         }
 
         public IReadOnlyCollection<string> ImplementedCalculatorNames

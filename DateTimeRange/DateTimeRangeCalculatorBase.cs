@@ -4,7 +4,7 @@ namespace DateTimeRange
 {
     public abstract class DateTimeRangeCalculatorBase
     {
-        public IDateTimeProvider DateTimeProvider { get; set; }
+        public IDateTimeProvider DateTimeProvider { protected get; set; }
 
         public abstract string Name { get; }
 
@@ -12,9 +12,9 @@ namespace DateTimeRange
 
         public abstract DateTimeRange CalculateFromInput(string input = "");
 
-        public DateTime Today => DateTimeProvider.Today;
+        protected DateTime Today => DateTimeProvider.Today;
 
-        protected bool ToLowerInputMatch(string input, string match)
+        protected bool EqualsLowerMatch(string input, string match)
             => input?.ToLower() == match?.ToLower();
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DateTimeRange.Extensions
 {
@@ -10,7 +8,7 @@ namespace DateTimeRange.Extensions
         {
             while (dateTime.DayOfWeek != DayOfWeek.Monday)
             {
-                dateTime = dateTime.AddDays(1);
+                dateTime = dateTime.AddDays(value: 1);
             }
             return dateTime;
         }

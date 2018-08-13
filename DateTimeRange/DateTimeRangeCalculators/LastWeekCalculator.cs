@@ -20,7 +20,7 @@ namespace DateTimeRange.DateTimeRangeCalculators
 
         public override bool DoesMatchInput(string input)
         {
-            return ToLowerInputMatch(input, "lastweek");
+            return EqualsLowerMatch(input: input, match: "lastweek");
         }
     }
 }

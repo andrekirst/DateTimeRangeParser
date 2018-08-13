@@ -46,8 +46,8 @@ namespace DateTimeRange.Tests
             };
 
             _mockDateTimeProvider
-                .SetupGet(m => m.Today)
-                .Returns(new DateTime(1986, 4, 11));
+                .SetupGet(expression: m => m.Today)
+                .Returns(value: new DateTime(year: 1986, month: 4, day: 11));
 
             RangeExtractor rangeExtractor2 = new RangeExtractor(
                 dateTimeProvider: _mockDateTimeProvider.Object,
@@ -71,8 +71,8 @@ namespace DateTimeRange.Tests
             };
 
             _mockDateTimeProvider
-                .SetupGet(m => m.Today)
-                .Returns(new DateTime(1986, 4, 11));
+                .SetupGet(expression: m => m.Today)
+                .Returns(value: new DateTime(year: 1986, month: 4, day: 11));
 
             RangeExtractor rangeExtractor2 = new RangeExtractor(
                 dateTimeProvider: _mockDateTimeProvider.Object,

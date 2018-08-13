@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using DateTimeRange.Extensions;
 
@@ -11,19 +10,19 @@ namespace DateTimeRange.DateTimeRangeCalculators
 
         public override DateTimeRange CalculateFromInput(string input = "")
         {
-            string[] splitByPoint = input?.Split('.');
-            int weekNumber = int.Parse(s: splitByPoint[0].Substring(2));
-            int yearNumber = int.Parse(s: splitByPoint[1]);
+            string[] splitByPoint = input?.Split(separator: '.');
+            int weekNumber = int.Parse(s: splitByPoint?[0].Substring(startIndex: 2));
+            int yearNumber = int.Parse(s: splitByPoint?[1]);
 
-            DateTime firstDayOfYear = new DateTime(yearNumber, 1, 1);
+            DateTime firstDayOfYear = new DateTime(year: yearNumber, month: 1, day: 1);
 
             DateTime firstMonday = firstDayOfYear.GetFirstMondayOfYear();
-            DateTime firstMondayPlusCountOfWeeks = firstMonday.AddDays(7 * (weekNumber - 1));
+            DateTime firstMondayPlusCountOfWeeks = firstMonday.AddDays(value: 7 * (weekNumber - 1));
 
             return new DateTimeRange
             {
                 Start = firstMondayPlusCountOfWeeks,
-                End = firstMondayPlusCountOfWeeks.AddDays(6)
+                End = firstMondayPlusCountOfWeeks.AddDays(value: 6)
             };
         }
 

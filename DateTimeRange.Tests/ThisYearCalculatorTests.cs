@@ -1,7 +1,4 @@
-﻿using System;
-using DateTimeRange.DateTimeRangeCalculators;
-using Moq;
-using Xunit;
+﻿using Moq;
 
 namespace DateTimeRange.Tests
 {

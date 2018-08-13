@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Reflection;
 using DateTimeRange.DateTimeRangeCalculators;
 
 namespace DateTimeRange
@@ -9,16 +9,6 @@ namespace DateTimeRange
     {
         public static void Main(string[] args)
         {
-
-            DateTime y2018 = DateTime.Parse("01.01.2018");
-            DateTime y2017 = DateTime.Parse("01.01.2017");
-            DateTime y2016 = DateTime.Parse("01.01.2016");
-            DateTime y2015 = DateTime.Parse("01.01.2015");
-
-            Calendar calendar = new GregorianCalendar();
-            int yyy = calendar.GetWeekOfYear(y2018, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-
-
             DefaultDateTimeProvider defaultDateTimeProvider = new DefaultDateTimeProvider();
 
             List<DateTimeRangeCalculatorBase> calculators = new List<DateTimeRangeCalculatorBase>
@@ -42,7 +32,9 @@ namespace DateTimeRange
                 dateTimeProvider: defaultDateTimeProvider,
                 calculators: calculators);
 
-            var range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "CW3.2018");
+            var range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "currentweek");
+
+            Console.WriteLine(range);
         }
     }
 }

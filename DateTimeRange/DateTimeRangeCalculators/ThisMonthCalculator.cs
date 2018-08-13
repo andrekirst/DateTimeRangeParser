@@ -20,7 +20,7 @@ namespace DateTimeRange.DateTimeRangeCalculators
 
         public override bool DoesMatchInput(string input)
         {
-            return ToLowerInputMatch(
+            return EqualsLowerMatch(
                 input: input,
                 match: "thismonth");
         }
