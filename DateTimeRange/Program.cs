@@ -14,10 +14,16 @@ namespace DateTimeRange
             RangeExtractor rangeExctractor = new RangeExtractor(
                 dateTimeProvider: defaultDateTimeProvider,
                 calculators: calculators);
+            rangeExctractor.RaisedCalculation += RangeExctractor_RaisedCalculation;
 
-            var range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "currentweek");
+            DateTimeRange range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "today");
 
             Console.WriteLine(range);
+        }
+
+        private static void RangeExctractor_RaisedCalculation(object sender, RaisedCalculationEventArgs e)
+        {
+            Console.WriteLine($"Raised calculation: {e.RaisedCalculator.Name}");
         }
     }
 }
