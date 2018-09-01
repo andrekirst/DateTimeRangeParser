@@ -21,5 +21,10 @@ namespace DateTimeRange
 
         protected bool EqualsLowerMatch(string input, string match)
             => input?.ToLower() == match?.ToLower();
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
