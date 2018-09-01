@@ -25,6 +25,11 @@ namespace DateTimeRange
             foreach (DateTimeRangeCalculatorBase calculator in calculators)
             {
                 calculator.DateTimeProvider = _dateTimeProvider;
+
+                if (calculator.NeedsOtherCalculations)
+                {
+                    calculator.OtherCalculations = calculators.Where(item => item != calculator).ToList();
+                }
             }
             _calculators.AddRange(collection: calculators);
         }

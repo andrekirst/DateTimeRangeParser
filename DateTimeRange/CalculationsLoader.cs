@@ -15,7 +15,8 @@ namespace DateTimeRange
                 new LastWeekCalculator(),
                 new CurrentWeekCalculator(),
                 new ThisMonthCalculator(),
-                new ThisYearCalculator()
+                new ThisYearCalculator(),
+                new DynamicRangeCalculator()
             };
         }
     }

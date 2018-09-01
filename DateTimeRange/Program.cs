@@ -16,7 +16,7 @@ namespace DateTimeRange
                 calculators: calculators);
             rangeExctractor.RaisedCalculation += RangeExctractor_RaisedCalculation;
 
-            DateTimeRange range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "today");
+            DateTimeRange range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "thismonth..yesterday");
 
             Console.WriteLine(range);
         }
