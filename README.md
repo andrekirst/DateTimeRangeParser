@@ -1,2 +1,3 @@
-# TimeRangeExtractor
-An API for extracting DateTime-Ranges from an input string
+# DateTimeRangeParser
+
+An API for parsing DateTime-Ranges from an input string
