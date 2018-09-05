@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace DateTimeRangeParser
@@ -20,6 +21,13 @@ namespace DateTimeRangeParser
             AddCalculators(calculators: calculators);
         }
 
+        public static DateTimeRangeParser CreateDefault(List<CultureInfo> supportedCulsturesToLoad = null)
+        {
+            return new DateTimeRangeParser(
+                dateTimeProvider: new DefaultDateTimeProvider(),
+                calculators: new CalculationsLoader().LoadCalculations(loadCulturesOf: supportedCulsturesToLoad));
+        }
+
         private void AddCalculators(List<DateTimeRangeCalculatorBase> calculators)
         {
             foreach (DateTimeRangeCalculatorBase calculator in calculators)
@@ -28,7 +36,9 @@ namespace DateTimeRangeParser
 
                 if (calculator.NeedsOtherCalculations)
                 {
-                    calculator.OtherCalculations = calculators.Where(predicate: item => item != calculator).ToList();
+                    calculator.OtherCalculations = calculators
+                        .Where(predicate: item => item != calculator)
+                        .ToList();
                 }
             }
             _calculators.AddRange(collection: calculators);

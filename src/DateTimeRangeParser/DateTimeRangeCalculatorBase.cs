@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DateTimeRangeParser
 {
@@ -22,9 +24,11 @@ namespace DateTimeRangeParser
         protected bool EqualsLowerMatch(string input, string match)
             => input?.ToLower() == match?.ToLower();
 
+        public abstract List<CultureInfo> SupportedCultures { get; }
+
         public override string ToString()
         {
-            return Name;
+            return $"{Name} - ({string.Join(separator: ", ", values: SupportedCultures.Select(selector: s => s.EnglishName))})";
         }
     }
 }

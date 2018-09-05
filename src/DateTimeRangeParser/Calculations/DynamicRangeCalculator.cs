@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace DateTimeRangeParser.Calculations
 {
-    public class DynamicRangeCalculator : DateTimeRangeCalculatorBase
+    public sealed class DynamicRangeCalculator : DateTimeRangeCalculatorBase
     {
         private const string Separator = "->";
 
@@ -36,5 +38,7 @@ namespace DateTimeRangeParser.Calculations
         }
 
         public override bool NeedsOtherCalculations => true;
+
+        public override List<CultureInfo> SupportedCultures => null;
     }
 }
