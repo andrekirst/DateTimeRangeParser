@@ -1,7 +1,7 @@
-﻿using DateTimeRange.DateTimeRangeCalculators;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DateTimeRangeParser.Calculations;
 
-namespace DateTimeRange
+namespace DateTimeRangeParser
 {
     public class CalculationsLoader
     {

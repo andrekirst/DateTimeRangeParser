@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DateTimeRange.DateTimeRangeCalculators
+namespace DateTimeRangeParser.Calculations
 {
     public class ThisMonthCalculator : DateTimeRangeCalculatorBase
     {

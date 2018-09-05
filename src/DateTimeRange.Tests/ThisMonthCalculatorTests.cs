@@ -1,6 +1,6 @@
 ﻿using Moq;
 
-namespace DateTimeRange.Tests
+namespace DateTimeRangeParser.Tests
 {
     public class ThisMonthCalculatorTests
     {

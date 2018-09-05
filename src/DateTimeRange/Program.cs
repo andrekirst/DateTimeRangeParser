@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DateTimeRange
+namespace DateTimeRangeParser
 {
     public static class Program
     {
@@ -16,7 +16,7 @@ namespace DateTimeRange
                 calculators: calculators);
             rangeExctractor.RaisedCalculation += RangeExctractor_RaisedCalculation;
 
-            DateTimeRange range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "thismonth..yesterday");
+            DateTimeRange range = rangeExctractor.Parse(input: "thismonth..yesterday");
 
             Console.WriteLine(value: range);
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DateTimeRange
+namespace DateTimeRangeParser
 {
     public abstract class DateTimeRangeCalculatorBase
     {

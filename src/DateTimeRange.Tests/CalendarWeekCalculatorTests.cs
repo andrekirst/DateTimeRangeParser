@@ -1,9 +1,9 @@
-﻿using DateTimeRange.DateTimeRangeCalculators;
+﻿using System;
+using DateTimeRangeParser.Calculations;
 using Moq;
-using System;
 using Xunit;
 
-namespace DateTimeRange.Tests
+namespace DateTimeRangeParser.Tests
 {
     public class CalendarWeekCalculatorTests
     {

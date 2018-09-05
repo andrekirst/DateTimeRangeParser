@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using Moq;
 using Xunit;
 
-namespace DateTimeRange.Tests
+namespace DateTimeRangeParser.Tests
 {
     public class RangeExtractor2Tests
     {
@@ -78,7 +78,7 @@ namespace DateTimeRange.Tests
                 dateTimeProvider: _mockDateTimeProvider.Object,
                 calculators: calculators);
 
-            DateTimeRange actual = rangeExtractor2.GenerateDateTimeRangeFromInput(input: "Today");
+            DateTimeRange actual = rangeExtractor2.Parse(input: "Today");
 
             DateTimeRange expected = new DateTimeRange
             {

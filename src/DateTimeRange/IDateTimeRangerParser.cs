@@ -1,4 +1,4 @@
-﻿namespace DateTimeRange
+﻿namespace DateTimeRangeParser
 {
     public interface IDateTimeRangerParser
     {

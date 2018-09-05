@@ -1,9 +1,9 @@
 ﻿using System;
-using DateTimeRange.DateTimeRangeCalculators;
+using DateTimeRangeParser.Calculations;
 using Moq;
 using Xunit;
 
-namespace DateTimeRange.Tests
+namespace DateTimeRangeParser.Tests
 {
     public class TodayCalculatorTests
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
-namespace DateTimeRange.DateTimeRangeCalculators
+namespace DateTimeRangeParser.Calculations
 {
     public class DynamicRangeCalculator : DateTimeRangeCalculatorBase
     {

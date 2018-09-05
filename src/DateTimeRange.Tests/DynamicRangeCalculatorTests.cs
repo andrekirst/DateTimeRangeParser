@@ -1,11 +1,11 @@
-﻿using DateTimeRange.DateTimeRangeCalculators;
-using Xunit;
-using Shouldly;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DateTimeRangeParser.Calculations;
+using Moq;
+using Shouldly;
+using Xunit;
 
-namespace DateTimeRange.Tests
+namespace DateTimeRangeParser.Tests
 {
     public class DynamicRangeCalculatorTests
     {

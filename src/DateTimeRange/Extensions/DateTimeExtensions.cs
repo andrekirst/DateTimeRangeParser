@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DateTimeRange.Extensions
+namespace DateTimeRangeParser.Extensions
 {
     public static class DateTimeExtensions
     {

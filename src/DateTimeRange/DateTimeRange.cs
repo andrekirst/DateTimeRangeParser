@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DateTimeRange
+namespace DateTimeRangeParser
 {
     public class DateTimeRange
     {

@@ -1,4 +1,4 @@
-﻿namespace DateTimeRange.DateTimeRangeCalculators
+﻿namespace DateTimeRangeParser.Calculations
 {
     public class TodayCalculator : DateTimeRangeCalculatorBase
     {

@@ -1,8 +1,8 @@
 ﻿using System;
+using DateTimeRangeParser.Extensions;
 using Xunit;
-using DateTimeRange.Extensions;
 
-namespace DateTimeRange.Tests.ExtensionTests.DateTimeExtensionTests
+namespace DateTimeRangeParser.Tests.ExtensionTests.DateTimeExtensionTests
 {
     public class GetFirstDayOfYearTests
     {
