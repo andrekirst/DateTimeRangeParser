@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DateTimeRangeParser", "Date
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DateTimeRangeParser.Tests", "DateTimeRange.Tests\DateTimeRangeParser.Tests.csproj", "{221E35FC-A526-40EE-A216-8A32E4AE678A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateTimeRangeParser.TestConsole", "DateTimeRangeParser.TestConsole\DateTimeRangeParser.TestConsole.csproj", "{94A5D919-8A5D-413D-88C4-8C1E8B12CCC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{221E35FC-A526-40EE-A216-8A32E4AE678A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{221E35FC-A526-40EE-A216-8A32E4AE678A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{221E35FC-A526-40EE-A216-8A32E4AE678A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A5D919-8A5D-413D-88C4-8C1E8B12CCC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A5D919-8A5D-413D-88C4-8C1E8B12CCC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A5D919-8A5D-413D-88C4-8C1E8B12CCC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A5D919-8A5D-413D-88C4-8C1E8B12CCC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

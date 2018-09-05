@@ -15,12 +15,12 @@ namespace DateTimeRangeParser.Calculations
             DateTimeRange startDateTimeRange =
                 OtherCalculations
                 .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.First()))
-                .CalculateFromInput(input: splitByTwoPoints.First());
+                    ?.CalculateFromInput(input: splitByTwoPoints.First());
 
             DateTimeRange endDateTimeRange =
                 OtherCalculations
                 .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.Last()))
-                .CalculateFromInput(input: splitByTwoPoints.Last());
+                    ?.CalculateFromInput(input: splitByTwoPoints.Last());
 
             return new DateTimeRange(
                 start: startDateTimeRange.Start,
