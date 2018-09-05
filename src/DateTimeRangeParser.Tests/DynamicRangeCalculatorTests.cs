@@ -20,7 +20,7 @@ namespace DateTimeRangeParser.Tests
             };
 
             systemUnderTest
-                .DoesMatchInput(input: "yesterday..today")
+                .DoesMatchInput(input: "yesterday->today")
                 .ShouldBeTrue();
         }
 
@@ -35,7 +35,7 @@ namespace DateTimeRangeParser.Tests
             };
 
             systemUnderTest
-                .DoesMatchInput(input: "yesterday->today")
+                .DoesMatchInput(input: "yesterday..today")
                 .ShouldBeFalse();
         }
 
@@ -57,22 +57,22 @@ namespace DateTimeRangeParser.Tests
         [Fact]
         public void Yesterday_to_Today_Today_is_11_04_1986_Expect_10_04_1986_to_11_04_1986()
         {
-            Mock<IDateTimeProvider> _mockDateTimeProvider = new Mock<IDateTimeProvider>();
+            Mock<IDateTimeProvider> mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
-            _mockDateTimeProvider
+            mockDateTimeProvider
                 .SetupGet(expression: m => m.Today)
                 .Returns(value: new DateTime(year: 1986, month: 4, day: 11));
 
             // TODO Umbauen...ich will ja nicht das Laden testen und auch nicht andere Implementierungen (Seperation!!!)
-            List<DateTimeRangeCalculatorBase> calculations = LoadCalculations(mockDateTimeProvider: _mockDateTimeProvider);
+            List<DateTimeRangeCalculatorBase> calculations = LoadCalculations(mockDateTimeProvider: mockDateTimeProvider);
 
             DynamicRangeCalculator systemUnderTest = new DynamicRangeCalculator()
             {
                 OtherCalculations = calculations,
-                DateTimeProvider = _mockDateTimeProvider.Object
+                DateTimeProvider = mockDateTimeProvider.Object
             };
 
-            DateTimeRange actual = systemUnderTest.CalculateFromInput(input: "yesterday..today");
+            DateTimeRange actual = systemUnderTest.CalculateFromInput(input: "yesterday->today");
 
             DateTimeRange expected = new DateTimeRange(
                 start: new DateTime(year: 1986, month: 4, day: 10),

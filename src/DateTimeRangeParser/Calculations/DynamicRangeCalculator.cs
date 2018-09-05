@@ -4,23 +4,23 @@ namespace DateTimeRangeParser.Calculations
 {
     public class DynamicRangeCalculator : DateTimeRangeCalculatorBase
     {
-        private const string Separator = "..";
+        private const string Separator = "->";
 
         public override string Name => "DynamicRange";
 
         public override DateTimeRange CalculateFromInput(string input = "")
         {
-            string[] splitByTwoPoints = input.Split(separator: Separator);
+            string[] splitBySeperator = input.Split(separator: Separator);
 
             DateTimeRange startDateTimeRange =
                 OtherCalculations
-                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.First()))
-                    ?.CalculateFromInput(input: splitByTwoPoints.First());
+                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitBySeperator.First()))
+                    ?.CalculateFromInput(input: splitBySeperator.First());
 
             DateTimeRange endDateTimeRange =
                 OtherCalculations
-                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.Last()))
-                    ?.CalculateFromInput(input: splitByTwoPoints.Last());
+                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitBySeperator.Last()))
+                    ?.CalculateFromInput(input: splitBySeperator.Last());
 
             return new DateTimeRange(
                 start: startDateTimeRange.Start,
@@ -29,10 +29,10 @@ namespace DateTimeRangeParser.Calculations
 
         public override bool DoesMatchInput(string input)
         {
-            string[] splitByTwoPoints = input.Split(separator: Separator);
+            string[] splitBySeperator = input.Split(separator: Separator);
             return
-                    OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.First())) &&
-                    OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.Last()));
+                OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitBySeperator.First())) &&
+                OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitBySeperator.Last()));
         }
 
         public override bool NeedsOtherCalculations => true;
