@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DateTimeRange\DateTimeRangeParser.csproj" />
+    <ProjectReference Include="..\DateTimeRangeParser\DateTimeRangeParser.csproj" />
   </ItemGroup>
 
 </Project>
