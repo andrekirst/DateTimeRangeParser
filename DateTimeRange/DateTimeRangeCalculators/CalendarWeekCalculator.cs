@@ -11,8 +11,8 @@ namespace DateTimeRange.DateTimeRangeCalculators
         public override DateTimeRange CalculateFromInput(string input = "")
         {
             string[] splitByPoint = input?.Split(separator: '.');
-            int weekNumber = ExtractWeeknumber(splitByPoint?[0]);
-            int yearNumber = ExtractYearnumber(splitByPoint?[1]);
+            int weekNumber = ExtractWeeknumber(splitByPoint: splitByPoint?[index0: 0]);
+            int yearNumber = ExtractYearnumber(splitByPoint: splitByPoint?[index0: 1]);
 
             DateTime firstDayOfYear = new DateTime(year: yearNumber, month: 1, day: 1);
             DateTime firstMonday = firstDayOfYear.GetFirstMondayOfYear();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DateTimeRange
 {
-    public class RangeExtractor
+    public class DateTimeRangeParser : IDateTimeRangerParser
     {
         private readonly List<DateTimeRangeCalculatorBase> _calculators = new List<DateTimeRangeCalculatorBase>();
         private readonly IDateTimeProvider _dateTimeProvider;
@@ -12,15 +12,15 @@ namespace DateTimeRange
 
         public event EventHandler<RaisedCalculationEventArgs> RaisedCalculation;
 
-        public RangeExtractor(
+        public DateTimeRangeParser(
             IDateTimeProvider dateTimeProvider,
-            IEnumerable<DateTimeRangeCalculatorBase> calculators)
+            List<DateTimeRangeCalculatorBase> calculators)
         {
             _dateTimeProvider = dateTimeProvider;
             AddCalculators(calculators: calculators);
         }
 
-        private void AddCalculators(IEnumerable<DateTimeRangeCalculatorBase> calculators)
+        private void AddCalculators(List<DateTimeRangeCalculatorBase> calculators)
         {
             foreach (DateTimeRangeCalculatorBase calculator in calculators)
             {
@@ -28,13 +28,13 @@ namespace DateTimeRange
 
                 if (calculator.NeedsOtherCalculations)
                 {
-                    calculator.OtherCalculations = calculators.Where(item => item != calculator).ToList();
+                    calculator.OtherCalculations = calculators.Where(predicate: item => item != calculator).ToList();
                 }
             }
             _calculators.AddRange(collection: calculators);
         }
 
-        public DateTimeRange GenerateDateTimeRangeFromInput(string input)
+        public DateTimeRange Parse(string input)
         {
             if (_cachedValues.ContainsKey(key: input))
             {

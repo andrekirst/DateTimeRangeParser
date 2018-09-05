@@ -11,19 +11,19 @@ namespace DateTimeRange
 
             List<DateTimeRangeCalculatorBase> calculators = new CalculationsLoader().LoadCalculations();
 
-            RangeExtractor rangeExctractor = new RangeExtractor(
+            DateTimeRangeParser rangeExctractor = new DateTimeRangeParser(
                 dateTimeProvider: defaultDateTimeProvider,
                 calculators: calculators);
             rangeExctractor.RaisedCalculation += RangeExctractor_RaisedCalculation;
 
             DateTimeRange range = rangeExctractor.GenerateDateTimeRangeFromInput(input: "thismonth..yesterday");
 
-            Console.WriteLine(range);
+            Console.WriteLine(value: range);
         }
 
         private static void RangeExctractor_RaisedCalculation(object sender, RaisedCalculationEventArgs e)
         {
-            Console.WriteLine($"Raised calculation: {e.RaisedCalculator.Name}");
+            Console.WriteLine(value: $"Raised calculation: {e.RaisedCalculator.Name}");
         }
     }
 }

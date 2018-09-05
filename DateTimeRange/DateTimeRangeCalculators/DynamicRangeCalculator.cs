@@ -15,12 +15,12 @@ namespace DateTimeRange.DateTimeRangeCalculators
 
             DateTimeRange startDateTimeRange =
                 OtherCalculations
-                .FirstOrDefault(m => m.DoesMatchInput(splitByTwoPoints.First()))
+                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.First()))
                 .CalculateFromInput(input: splitByTwoPoints.First());
 
             DateTimeRange endDateTimeRange =
                 OtherCalculations
-                .FirstOrDefault(m => m.DoesMatchInput(splitByTwoPoints.Last()))
+                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.Last()))
                 .CalculateFromInput(input: splitByTwoPoints.Last());
 
             return new DateTimeRange(
@@ -32,8 +32,8 @@ namespace DateTimeRange.DateTimeRangeCalculators
         {
             string[] splitByTwoPoints = input.Split(separator: Separator);
             return
-                    OtherCalculations.Any(m => m.DoesMatchInput(splitByTwoPoints.First())) &&
-                    OtherCalculations.Any(m => m.DoesMatchInput(splitByTwoPoints.Last()));
+                    OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.First())) &&
+                    OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitByTwoPoints.Last()));
         }
 
         public override bool NeedsOtherCalculations => true;
