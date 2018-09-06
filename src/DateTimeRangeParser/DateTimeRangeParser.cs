@@ -21,12 +21,12 @@ namespace DateTimeRangeParser
             AddCalculators(calculators: calculators);
         }
 
-        public static DateTimeRangeParser CreateDefault(List<CultureInfo> supportedCulsturesToLoad = null)
-        {
-            return new DateTimeRangeParser(
-                dateTimeProvider: new DefaultDateTimeProvider(),
-                calculators: new CalculationsLoader().LoadCalculations(loadCulturesOf: supportedCulsturesToLoad));
-        }
+        //public static DateTimeRangeParser CreateDefault(List<CultureInfo> supportedCulsturesToLoad = null)
+        //{
+        //    return new DateTimeRangeParser(
+        //        dateTimeProvider: new DefaultDateTimeProvider(),
+        //        calculators: new CalculationsLoader().LoadCalculations(loadCulturesOf: supportedCulsturesToLoad));
+        //}
 
         private void AddCalculators(List<DateTimeRangeCalculatorBase> calculators)
         {
