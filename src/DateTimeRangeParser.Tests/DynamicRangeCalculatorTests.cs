@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using DateTimeRangeParser.Calculations;
 using Moq;
@@ -42,11 +43,15 @@ namespace DateTimeRangeParser.Tests
         [Fact]
         public void Bla_to_Blabla_Test_DoesMatchInput_with_non_existing_Calculations_Expect_false()
         {
-            CalculationsLoader calculationsLoader = new CalculationsLoader();
+            Mock<IDateTimeProvider> mockDateTimeProvider = new Mock<IDateTimeProvider>();
+
+            mockDateTimeProvider
+                .SetupGet(expression: m => m.Today)
+                .Returns(value: new DateTime(year: 1986, month: 4, day: 11));
 
             DynamicRangeCalculator systemUnderTest = new DynamicRangeCalculator()
             {
-                OtherCalculations = calculationsLoader.LoadCalculations()
+                OtherCalculations = LoadCalculations(mockDateTimeProvider: mockDateTimeProvider)
             };
 
             systemUnderTest

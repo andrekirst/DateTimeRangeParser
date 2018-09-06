@@ -24,7 +24,7 @@ namespace DateTimeRangeParser.Tests
                 };
             }
 
-            public override List<CultureInfo> SupportedCultures { get; }
+            public override List<CultureInfo> SupportedCultures { get; } = null;
 
             public override bool DoesMatchInput(string input)
             {

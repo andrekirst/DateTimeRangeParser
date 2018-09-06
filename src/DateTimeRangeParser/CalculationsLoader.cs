@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
-using DateTimeRangeParser.Calculations;
-using DateTimeRangeParser.Calculations.Cultures.German;
 
 namespace DateTimeRangeParser
 {
@@ -14,6 +12,7 @@ namespace DateTimeRangeParser
             Type calculatorBaseType = typeof(DateTimeRangeCalculatorBase);
             var result = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(selector: s => s.GetTypes())
+                .Where(predicate: p => p.IsPublic)
                 .Where(predicate: p => !p.IsAbstract)
                 .Where(predicate: p => calculatorBaseType.IsAssignableFrom(c: p))
                 .Select(selector: Activator.CreateInstance)

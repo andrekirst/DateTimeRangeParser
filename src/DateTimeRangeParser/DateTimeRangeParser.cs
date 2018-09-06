@@ -55,7 +55,7 @@ namespace DateTimeRangeParser
 
             if (calculation == null)
             {
-                throw new NotSupportedException(message: $"Input \"{input}\" is not supported");
+                return DateTimeRange.Empty;
             }
 
             DateTimeRange calculatedValue = calculation.CalculateFromInput(input: input);
