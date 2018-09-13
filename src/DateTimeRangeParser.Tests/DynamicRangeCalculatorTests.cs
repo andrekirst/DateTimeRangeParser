@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using DateTimeRangeParser.Abstractions.SystemAbstractions;
 using DateTimeRangeParser.Calculations;
 using Moq;
 using Shouldly;
@@ -11,16 +10,6 @@ namespace DateTimeRangeParser.Tests
 {
     public class DynamicRangeCalculatorTests
     {
-        private readonly Mock<CurrentAppDomain> _mockAppDomain;
-
-        public DynamicRangeCalculatorTests()
-        {
-            _mockAppDomain = new Mock<CurrentAppDomain>()
-            {
-                CallBase = true
-            };
-        }
-
         [Fact]
         public void Yesterday_to_Today_Test_DoesMatchInput_Expect_True()
         {
@@ -99,8 +88,11 @@ namespace DateTimeRangeParser.Tests
 
         private List<DateTimeRangeCalculatorBase> LoadCalculations(Mock<IDateTimeProvider> mockDateTimeProvider)
         {
-            CalculationsLoader calculationsLoader = new CalculationsLoader(appDomain: _mockAppDomain.Object);
-            List<DateTimeRangeCalculatorBase> calculations = calculationsLoader.LoadCalculations();
+            CalculationsLoader calculationsLoader = new CalculationsLoader();
+            List<DateTimeRangeCalculatorBase> calculations = calculationsLoader
+                .LoadCalculations()
+                .Where(c => !(c is DynamicRangeCalculator))
+                .ToList();
             foreach (var item in calculations)
             {
                 item.DateTimeProvider = mockDateTimeProvider.Object;

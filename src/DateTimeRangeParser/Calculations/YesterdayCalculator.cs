@@ -16,7 +16,7 @@ namespace DateTimeRangeParser.Calculations
 
         public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
-            DateTime yesterday = DateTimeProvider.Today.AddDays(value: -1);
+            DateTime yesterday = Today.AddDays(value: -1);
 
             return new DateTimeRange
             {

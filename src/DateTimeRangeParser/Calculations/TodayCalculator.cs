@@ -17,8 +17,8 @@ namespace DateTimeRangeParser.Calculations
         {
             return new DateTimeRange
             {
-                Start = DateTimeProvider.Today,
-                End = DateTimeProvider.Today
+                Start = Today,
+                End = Today
             };
         }
 

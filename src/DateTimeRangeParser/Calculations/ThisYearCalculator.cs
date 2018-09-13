@@ -16,12 +16,10 @@ namespace DateTimeRangeParser.Calculations
 
         public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
-            DateTime today = DateTimeProvider.Today;
-
             return new DateTimeRange
             {
-                Start = new DateTime(year: today.Year, month: 1, day: 1),
-                End = new DateTime(year: today.Year, month: 12, day: 31)
+                Start = new DateTime(year: Today.Year, month: 1, day: 1),
+                End = new DateTime(year: Today.Year, month: 12, day: 31)
             };
         }
 

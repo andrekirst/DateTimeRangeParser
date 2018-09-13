@@ -38,6 +38,10 @@ namespace DateTimeRangeParser.Calculations
         public override bool DoesMatchInput(string input)
         {
             string[] splitBySeperator = input.Split(separator: Separator);
+            if (splitBySeperator != null && splitBySeperator.Length != 2)
+            {
+                return false;
+            }
             return
                 OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitBySeperator.First())) &&
                 OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitBySeperator.Last()));

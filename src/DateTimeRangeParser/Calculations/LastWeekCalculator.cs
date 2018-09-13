@@ -17,12 +17,11 @@ namespace DateTimeRangeParser.Calculations
         public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
             DateTime start = Today.AddDays(value: -(int)Today.DayOfWeek + 1 - 7);
-            DateTime end = Today.AddDays(value: 7 % (int)Today.DayOfWeek - 7);
 
             return new DateTimeRange
             {
                 Start = start,
-                End = end
+                End = start.AddDays(value: 6)
             };
         }
 
