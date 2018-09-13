@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using DateTimeRangeParser.Extensions;
 
@@ -7,6 +9,12 @@ namespace DateTimeRangeParser.Calculations
     public class CalendarWeekCalculator : DateTimeRangeCalculatorBase
     {
         public override string Name => "CalendarWeek";
+
+        public override List<CultureInfo> SupportedCultures =>
+            new List<CultureInfo>()
+            {
+                CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
+            };
 
         public override DateTimeRange CalculateFromInput(string input = "")
         {

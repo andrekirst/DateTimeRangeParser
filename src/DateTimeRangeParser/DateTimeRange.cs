@@ -16,6 +16,16 @@ namespace DateTimeRangeParser
             End = end;
         }
 
+        public static DateTimeRange Empty =>
+            new DateTimeRange(
+                start: DateTime.MinValue,
+                end: DateTime.MaxValue)
+            {
+                IsValid = false
+            };
+
+        public bool IsValid { get; set; }
+
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using Moq;
 using Xunit;
 
@@ -22,6 +23,8 @@ namespace DateTimeRangeParser.Tests
                     End = new DateTime(year: 1986, month: 4, day: 11)
                 };
             }
+
+            public override List<CultureInfo> SupportedCultures { get; } = null;
 
             public override bool DoesMatchInput(string input)
             {

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DateTimeRangeParser
 {
@@ -7,9 +9,7 @@ namespace DateTimeRangeParser
     {
         public IDateTimeProvider DateTimeProvider { protected get; set; }
 
-        public List<DateTimeRangeCalculatorBase> OtherCalculations { protected get; set; } = new List<DateTimeRangeCalculatorBase>();
-
-        public virtual bool NeedsOtherCalculations { get; } = false;
+        protected DateTime Today => DateTimeProvider.Today;
 
         public abstract string Name { get; }
 
@@ -17,14 +17,29 @@ namespace DateTimeRangeParser
 
         public abstract DateTimeRange CalculateFromInput(string input = "");
 
-        protected DateTime Today => DateTimeProvider.Today;
+        public List<DateTimeRangeCalculatorBase> OtherCalculations { protected get; set; } = new List<DateTimeRangeCalculatorBase>();
 
-        protected bool EqualsLowerMatch(string input, string match)
+        public virtual bool NeedsOtherCalculations { get; } = false;
+
+        public abstract List<CultureInfo> SupportedCultures { get; }
+
+        protected static bool EqualsLowerMatch(string input, string match)
             => input?.ToLower() == match?.ToLower();
 
         public override string ToString()
         {
-            return Name;
+            return $"{Name} - ({string.Join(separator: ", ", values: SupportedCultures.Select(selector: s => s.EnglishName))})";
+        }
+
+        public override bool Equals(object obj)
+        {
+            DateTimeRangeCalculatorBase other = obj as DateTimeRangeCalculatorBase;
+            return Name == other?.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name?.GetHashCode() ?? string.Empty.GetHashCode();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using DateTimeRangeParser.Calculations;
 using Moq;
@@ -12,11 +13,11 @@ namespace DateTimeRangeParser.Tests
         [Fact]
         public void Yesterday_to_Today_Test_DoesMatchInput_Expect_True()
         {
-            CalculationsLoader calculationsLoader = new CalculationsLoader();
+            Mock<IDateTimeProvider> mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
             DynamicRangeCalculator systemUnderTest = new DynamicRangeCalculator()
             {
-                OtherCalculations = calculationsLoader.LoadCalculations()
+                OtherCalculations = LoadCalculations(mockDateTimeProvider: mockDateTimeProvider)
             };
 
             systemUnderTest
@@ -27,11 +28,11 @@ namespace DateTimeRangeParser.Tests
         [Fact]
         public void Yesterday_to_Today_Test_DoesMatchInput_with_wrong_splitter_Expect_false()
         {
-            CalculationsLoader calculationsLoader = new CalculationsLoader();
+            Mock<IDateTimeProvider> mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
             DynamicRangeCalculator systemUnderTest = new DynamicRangeCalculator()
             {
-                OtherCalculations = calculationsLoader.LoadCalculations()
+                OtherCalculations = LoadCalculations(mockDateTimeProvider: mockDateTimeProvider)
             };
 
             systemUnderTest
@@ -42,11 +43,15 @@ namespace DateTimeRangeParser.Tests
         [Fact]
         public void Bla_to_Blabla_Test_DoesMatchInput_with_non_existing_Calculations_Expect_false()
         {
-            CalculationsLoader calculationsLoader = new CalculationsLoader();
+            Mock<IDateTimeProvider> mockDateTimeProvider = new Mock<IDateTimeProvider>();
+
+            mockDateTimeProvider
+                .SetupGet(expression: m => m.Today)
+                .Returns(value: new DateTime(year: 1986, month: 4, day: 11));
 
             DynamicRangeCalculator systemUnderTest = new DynamicRangeCalculator()
             {
-                OtherCalculations = calculationsLoader.LoadCalculations()
+                OtherCalculations = LoadCalculations(mockDateTimeProvider: mockDateTimeProvider)
             };
 
             systemUnderTest
@@ -81,10 +86,13 @@ namespace DateTimeRangeParser.Tests
             actual.ShouldBe(expected: expected);
         }
 
-        private static List<DateTimeRangeCalculatorBase> LoadCalculations(Mock<IDateTimeProvider> mockDateTimeProvider)
+        private List<DateTimeRangeCalculatorBase> LoadCalculations(Mock<IDateTimeProvider> mockDateTimeProvider)
         {
             CalculationsLoader calculationsLoader = new CalculationsLoader();
-            List<DateTimeRangeCalculatorBase> calculations = calculationsLoader.LoadCalculations();
+            List<DateTimeRangeCalculatorBase> calculations = calculationsLoader
+                .LoadCalculations()
+                .Where(c => !(c is DynamicRangeCalculator))
+                .ToList();
             foreach (var item in calculations)
             {
                 item.DateTimeProvider = mockDateTimeProvider.Object;

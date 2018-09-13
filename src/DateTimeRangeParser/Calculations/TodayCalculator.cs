@@ -1,15 +1,24 @@
-﻿namespace DateTimeRangeParser.Calculations
+﻿using System.Collections.Generic;
+using System.Globalization;
+
+namespace DateTimeRangeParser.Calculations
 {
     public class TodayCalculator : DateTimeRangeCalculatorBase
     {
         public override string Name => "Today";
 
-        public override DateTimeRange CalculateFromInput(string input = "")
+        public override List<CultureInfo> SupportedCultures =>
+            new List<CultureInfo>()
+            {
+                CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
+            };
+
+        public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
             return new DateTimeRange
             {
-                Start = DateTimeProvider.Today,
-                End = DateTimeProvider.Today
+                Start = Today,
+                End = Today
             };
         }
 

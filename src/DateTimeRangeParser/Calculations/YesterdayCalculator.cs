@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace DateTimeRangeParser.Calculations
 {
@@ -6,9 +8,15 @@ namespace DateTimeRangeParser.Calculations
     {
         public override string Name => "Yesterday";
 
-        public override DateTimeRange CalculateFromInput(string input = "")
+        public override List<CultureInfo> SupportedCultures =>
+            new List<CultureInfo>()
+            {
+                CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
+            };
+
+        public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
-            DateTime yesterday = DateTimeProvider.Today.AddDays(value: -1);
+            DateTime yesterday = Today.AddDays(value: -1);
 
             return new DateTimeRange
             {

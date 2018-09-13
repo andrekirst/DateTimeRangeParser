@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace DateTimeRangeParser.Calculations
 {
@@ -6,9 +8,15 @@ namespace DateTimeRangeParser.Calculations
     {
         public override string Name => "ThisMonth";
 
-        public override DateTimeRange CalculateFromInput(string input = "")
+        public override List<CultureInfo> SupportedCultures =>
+            new List<CultureInfo>()
+            {
+                CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
+            };
+
+        public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
-            DateTime nextMonthSameDay = Today.Date.AddMonths(months: 1);
+            DateTime nextMonthSameDay = Today.AddMonths(months: 1);
             DateTime end = Today.AddMonths(months: 1).AddDays(value: -nextMonthSameDay.Day);
 
             return new DateTimeRange

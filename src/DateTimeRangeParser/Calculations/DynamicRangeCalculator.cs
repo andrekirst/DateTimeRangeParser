@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace DateTimeRangeParser.Calculations
 {
-    public class DynamicRangeCalculator : DateTimeRangeCalculatorBase
+    public sealed class DynamicRangeCalculator : DateTimeRangeCalculatorBase
     {
         private const string Separator = "->";
 
@@ -10,17 +12,23 @@ namespace DateTimeRangeParser.Calculations
 
         public override DateTimeRange CalculateFromInput(string input = "")
         {
-            string[] splitBySeperator = input.Split(separator: Separator);
+            string[] splitBySeperator = input
+                .Split(separator: Separator)
+                .Take(count: 2)
+                .ToArray();
+
+            string startInput = splitBySeperator.First();
+            string endInput = splitBySeperator.Last();
 
             DateTimeRange startDateTimeRange =
                 OtherCalculations
-                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitBySeperator.First()))
-                    ?.CalculateFromInput(input: splitBySeperator.First());
+                    .FirstOrDefault(predicate: m => m.DoesMatchInput(input: startInput))
+                    ?.CalculateFromInput(input: startInput) ?? DateTimeRange.Empty;
 
             DateTimeRange endDateTimeRange =
                 OtherCalculations
-                .FirstOrDefault(predicate: m => m.DoesMatchInput(input: splitBySeperator.Last()))
-                    ?.CalculateFromInput(input: splitBySeperator.Last());
+                    .FirstOrDefault(predicate: m => m.DoesMatchInput(input: endInput))
+                    ?.CalculateFromInput(input: endInput) ?? DateTimeRange.Empty;
 
             return new DateTimeRange(
                 start: startDateTimeRange.Start,
@@ -30,11 +38,17 @@ namespace DateTimeRangeParser.Calculations
         public override bool DoesMatchInput(string input)
         {
             string[] splitBySeperator = input.Split(separator: Separator);
+            if (splitBySeperator != null && splitBySeperator.Length != 2)
+            {
+                return false;
+            }
             return
                 OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitBySeperator.First())) &&
                 OtherCalculations.Any(predicate: m => m.DoesMatchInput(input: splitBySeperator.Last()));
         }
 
         public override bool NeedsOtherCalculations => true;
+
+        public override List<CultureInfo> SupportedCultures => null;
     }
 }

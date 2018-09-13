@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace DateTimeRangeParser.Calculations
 {
@@ -6,17 +8,20 @@ namespace DateTimeRangeParser.Calculations
     {
         public override string Name => "CurrentWeek";
 
-        public override DateTimeRange CalculateFromInput(string input = "")
-        {
-            DateTime today = DateTimeProvider.Today;
+        public override List<CultureInfo> SupportedCultures =>
+            new List<CultureInfo>()
+            {
+                CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
+            };
 
-            DateTime start = today.AddDays(value: -(int)today.DayOfWeek + 1);
-            DateTime end = today.AddDays(value: 6 - 7 % (int)today.DayOfWeek);
+        public sealed override DateTimeRange CalculateFromInput(string input = "")
+        {
+            DateTime start = Today.AddDays(value: -(int)Today.DayOfWeek + 1);
 
             return new DateTimeRange
             {
                 Start = start,
-                End = end
+                End = start.AddDays(6)
             };
         }
 

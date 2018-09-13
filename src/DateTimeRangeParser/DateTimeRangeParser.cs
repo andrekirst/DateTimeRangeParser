@@ -20,6 +20,13 @@ namespace DateTimeRangeParser
             AddCalculators(calculators: calculators);
         }
 
+        //public static DateTimeRangeParser CreateDefault(List<CultureInfo> supportedCulsturesToLoad = null)
+        //{
+        //    return new DateTimeRangeParser(
+        //        dateTimeProvider: new DefaultDateTimeProvider(),
+        //        calculators: new CalculationsLoader().LoadCalculations(loadCulturesOf: supportedCulsturesToLoad));
+        //}
+
         private void AddCalculators(List<DateTimeRangeCalculatorBase> calculators)
         {
             foreach (DateTimeRangeCalculatorBase calculator in calculators)
@@ -28,7 +35,9 @@ namespace DateTimeRangeParser
 
                 if (calculator.NeedsOtherCalculations)
                 {
-                    calculator.OtherCalculations = calculators.Where(predicate: item => item != calculator).ToList();
+                    calculator.OtherCalculations = calculators
+                        .Where(predicate: item => item != calculator)
+                        .ToList();
                 }
             }
             _calculators.AddRange(collection: calculators);
@@ -45,7 +54,7 @@ namespace DateTimeRangeParser
 
             if (calculation == null)
             {
-                throw new NotSupportedException(message: $"Input \"{input}\" is not supported");
+                return DateTimeRange.Empty;
             }
 
             DateTimeRange calculatedValue = calculation.CalculateFromInput(input: input);

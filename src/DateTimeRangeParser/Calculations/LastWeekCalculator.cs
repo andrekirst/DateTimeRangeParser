@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace DateTimeRangeParser.Calculations
 {
@@ -6,15 +8,20 @@ namespace DateTimeRangeParser.Calculations
     {
         public override string Name => "LastWeek";
 
-        public override DateTimeRange CalculateFromInput(string input = "")
+        public override List<CultureInfo> SupportedCultures =>
+            new List<CultureInfo>()
+            {
+                CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
+            };
+
+        public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
             DateTime start = Today.AddDays(value: -(int)Today.DayOfWeek + 1 - 7);
-            DateTime end = Today.AddDays(value: 7 % (int)Today.DayOfWeek - 7);
 
             return new DateTimeRange
             {
                 Start = start,
-                End = end
+                End = start.AddDays(value: 6)
             };
         }
 
