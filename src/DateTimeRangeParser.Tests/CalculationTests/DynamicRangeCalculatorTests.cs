@@ -6,7 +6,7 @@ using Moq;
 using Shouldly;
 using Xunit;
 
-namespace DateTimeRangeParser.Tests
+namespace DateTimeRangeParser.Tests.CalculationTests
 {
     public class DynamicRangeCalculatorTests
     {

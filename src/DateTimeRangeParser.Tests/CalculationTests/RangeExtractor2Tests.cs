@@ -5,7 +5,7 @@ using System.Globalization;
 using Moq;
 using Xunit;
 
-namespace DateTimeRangeParser.Tests
+namespace DateTimeRangeParser.Tests.CalculationTests
 {
     public class RangeExtractor2Tests
     {
