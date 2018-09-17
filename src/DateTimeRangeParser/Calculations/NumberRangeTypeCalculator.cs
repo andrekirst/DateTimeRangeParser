@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DateTimeRangeParser.Calculations
@@ -18,51 +17,28 @@ namespace DateTimeRangeParser.Calculations
             CultureInfo.GetCultureInfoByIetfLanguageTag(name: "en")
         };
 
-        public override DateTimeRange CalculateFromInput(string input = "")
+        public virtual char DayCharacter => 'd';
+        public virtual char WeekCharacter => 'w';
+        public virtual char MonthCharacter => 'm';
+        public virtual char YearCharacter => 'y';
+
+        private Dictionary<char, Func<int, int, DateTime>> DateUnitMappings => new Dictionary<char, Func<int, int, DateTime>>
+            {
+                { DayCharacter, (faktorCalculation, numberOfUnits) => Today.AddDays(faktorCalculation * numberOfUnits) },
+                { WeekCharacter, (faktorCalculation, numberOfUnits) => Today.AddDays(faktorCalculation * (numberOfUnits * 7)) },
+                { MonthCharacter, (faktorCalculation, numberOfUnits) => Today.AddMonths(faktorCalculation * numberOfUnits) },
+                { YearCharacter, (faktorCalculation, numberOfUnits) => Today.AddYears(faktorCalculation * numberOfUnits) }
+            };
+
+        public sealed override DateTimeRange CalculateFromInput(string input = "")
         {
-            List<string> matches = Regex.Matches(
-                input: input,
-                pattern: Pattern,
-                options: RegexOptions.Compiled)
-                .Cast<Match>()
-                .Select(s => s.Groups)
-                .First()
-                .Select(s => s.Captures)
-                .Skip(1)
-                .Select(s => s.First().Value)
-                .ToList();
+            List<string> matches = ExtractMatchingValues(input);
 
             int faktorCalculation = string.IsNullOrEmpty(matches[0]) || matches[0] == "+" ? 1 : -1;
             int numberOfUnits = int.Parse(matches[1]);
             char dateUnit = matches[2][0];
 
-            DateTime date = DateTime.MinValue;
-
-            switch (dateUnit)
-            {
-                case 'd':
-                    {
-                        date = Today.AddDays(faktorCalculation * numberOfUnits);
-                        break;
-                    }
-                case 'w':
-                    {
-                        date = Today.AddDays(faktorCalculation * (numberOfUnits * 7));
-                        break;
-                    }
-                case 'm':
-                    {
-                        date = Today.AddMonths(faktorCalculation * numberOfUnits);
-                        break;
-                    }
-                case 'y':
-                    {
-                        date = Today.AddYears(faktorCalculation * numberOfUnits);
-                        break;
-                    }
-                default:
-                    break;
-            }
+            DateTime date = DateUnitMappings[dateUnit](faktorCalculation, numberOfUnits);
 
             return new DateTimeRange
             {
@@ -77,6 +53,21 @@ namespace DateTimeRangeParser.Calculations
                 input: input,
                 pattern: Pattern,
                 options: RegexOptions.Compiled);
+        }
+
+        private static List<string> ExtractMatchingValues(string input)
+        {
+            return Regex.Matches(
+                input: input,
+                pattern: Pattern,
+                options: RegexOptions.Compiled)
+                .Cast<Match>()
+                .Select(s => s.Groups)
+                .First()
+                .Select(s => s.Captures)
+                .Skip(1)
+                .Select(s => s.First().Value)
+                .ToList();
         }
     }
 }
