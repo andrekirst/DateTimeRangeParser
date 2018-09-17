@@ -20,15 +20,19 @@ namespace DateTimeRangeParser.Tests.CalculationTests
 
         [InlineData("1d", true)]
         [InlineData("1w", true)]
+        [InlineData("1m", true)]
         [InlineData("1y", true)]
         [InlineData("+1d", true)]
         [InlineData("+1w", true)]
+        [InlineData("+1m", true)]
         [InlineData("+1y", true)]
         [InlineData("-1d", true)]
         [InlineData("-1w", true)]
+        [InlineData("-1m", true)]
         [InlineData("-1y", true)]
         [InlineData("0d", false)]
         [InlineData("0w", false)]
+        [InlineData("0m", false)]
         [InlineData("0y", false)]
         [Theory]
         public void DoesMatchInput_Parameterized(string input, bool expectedValue)
@@ -66,12 +70,15 @@ namespace DateTimeRangeParser.Tests.CalculationTests
             {
                 new object[] { "1d", new DateTimeRange(new DateTime(2018, 9, 17), new DateTime(2018, 9, 17)) },
                 new object[] { "1w", new DateTimeRange(new DateTime(2018, 9, 23), new DateTime(2018, 9, 23)) },
+                new object[] { "1m", new DateTimeRange(new DateTime(2018, 10, 16), new DateTime(2018, 10, 16)) },
                 new object[] { "1y", new DateTimeRange(new DateTime(2019, 9, 16), new DateTime(2019, 9, 16)) },
                 new object[] { "+1d", new DateTimeRange(new DateTime(2018, 9, 17), new DateTime(2018, 9, 17)) },
                 new object[] { "+1w", new DateTimeRange(new DateTime(2018, 9, 23), new DateTime(2018, 9, 23)) },
+                new object[] { "+1m", new DateTimeRange(new DateTime(2018, 10, 16), new DateTime(2018, 10, 16)) },
                 new object[] { "+1y", new DateTimeRange(new DateTime(2019, 9, 16), new DateTime(2019, 9, 16)) },
                 new object[] { "-1d", new DateTimeRange(new DateTime(2018, 9, 15), new DateTime(2018, 9, 15)) },
                 new object[] { "-1w", new DateTimeRange(new DateTime(2018, 9, 9), new DateTime(2018, 9, 9)) },
+                new object[] { "-1m", new DateTimeRange(new DateTime(2018, 8, 16), new DateTime(2018, 8, 16)) },
                 new object[] { "-1y", new DateTimeRange(new DateTime(2017, 9, 16), new DateTime(2017, 9, 16)) },
             };
     }
