@@ -1,12 +1,12 @@
 ﻿using Moq;
 
-namespace DateTimeRangeParser.Tests
+namespace DateTimeRangeParser.Tests.CalculationTests
 {
-    public class ThisYearCalculatorTests
+    public class ThisMonthCalculatorTests
     {
         private readonly Mock<IDateTimeProvider> _mockDateTimeProvider;
 
-        public ThisYearCalculatorTests()
+        public ThisMonthCalculatorTests()
         {
             _mockDateTimeProvider = new Mock<IDateTimeProvider>();
         }

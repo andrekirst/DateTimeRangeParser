@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace DateTimeRangeParser.Tests
+namespace DateTimeRangeParser.Tests.CalculationTests
 {
     public class DatetimeRangeEqualsTests
     {
