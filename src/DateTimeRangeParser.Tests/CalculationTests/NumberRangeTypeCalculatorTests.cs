@@ -38,6 +38,14 @@ namespace DateTimeRangeParser.Tests.CalculationTests
         [InlineData("w", false)]
         [InlineData("m", false)]
         [InlineData("y", false)]
+        [InlineData("-d", false)]
+        [InlineData("-w", false)]
+        [InlineData("-m", false)]
+        [InlineData("-y", false)]
+        [InlineData("+d", false)]
+        [InlineData("+w", false)]
+        [InlineData("+m", false)]
+        [InlineData("+y", false)]
         [Theory]
         public void DoesMatchInput_Parameterized(string input, bool expectedValue)
         {
