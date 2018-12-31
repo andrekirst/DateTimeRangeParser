@@ -51,7 +51,9 @@ build_script:
   # - ps: MSBuild.SonarQube.Runner.exe end /d:"sonar.login=$($env:SONARQUBE_TOKEN)"
   # - ps: codecov -f "c:\projects\WordCount\opencovertests.xml" -t $env:CODECOV_TOKEN
 
-test: on
+test:
+  assemblies:
+    - '**\*.Tests.dll'
 
 after_build:
   - ps: if ($env:APPVEYOR_REPO_BRANCH -eq "master") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version).zip" }
