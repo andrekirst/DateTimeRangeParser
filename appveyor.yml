@@ -36,8 +36,8 @@ environment:
     # secure: bfX6ISggSBc6AHPqmjFB4CG6xYnpU3mZbJEGtVvbd+XO16NZBd3IUeLvmFyCLhuC
 
 install:
-  - choco install "msbuild-sonarqube-runner" -y
-  - choco install xunit -y
+  # - choco install "msbuild-sonarqube-runner" -y
+  # - choco install xunit -y
   # - choco install opencover.portable -y
   # - choco install codecov -y
 
