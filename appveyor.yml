@@ -70,6 +70,7 @@ after_build:
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
   # - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\Autofac.xml" -Recurse
   - ps: 7z a $env:deploymentfilename "$env:APPVEYOR_BUILD_FOLDER\output\*.*" -r
+  - ps: $env:nugetpkg = $env:APPVEYOR_BUILD_FOLDER\output\DateTimeRangeParser.1.0.0.nupkg
 
 # on_success:
 #   - curl -s -o copilot https://copilot.blackducksoftware.com/ci/appveyor/scripts/upload
@@ -84,4 +85,4 @@ deploy:
   api_key:
     secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
   skip_symbols: true
-  artifact: "$env:APPVEYOR_BUILD_FOLDER\output\DateTimeRangeParser.1.0.0.nupkg"
+  artifact: $(nugetpkg)
