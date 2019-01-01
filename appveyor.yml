@@ -70,7 +70,7 @@ after_build:
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
   # - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\Autofac.xml" -Recurse
   - ps: 7z a $env:deploymentfilename "$env:APPVEYOR_BUILD_FOLDER\output\*.*" -r
-  - ps: $env:nugetpkg = "$env:APPVEYOR_BUILD_FOLDER\output\DateTimeRangeParser.1.0.0.nupkg"
+  - ps: $env:nugetpkg = "DateTimeRangeParser.1.0.0.nupkg"
 
 # on_success:
 #   - curl -s -o copilot https://copilot.blackducksoftware.com/ci/appveyor/scripts/upload
