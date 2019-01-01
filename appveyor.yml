@@ -83,5 +83,4 @@ deploy:
   api_key:
     secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
   skip_symbols: true
-  artifact: /.*\.nupkg/
-  
+  artifact: $env:APPVEYOR_BUILD_FOLDER\output\*.nupkg
