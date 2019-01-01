@@ -30,6 +30,7 @@ matrix:
 
 environment:
   deploymentfilename: ""
+  # nugetpkg: ""
   # SONARQUBE_TOKEN:
   #   secure: ACcdrpuhAnH8XDKRMUFdE4pjTH1vlH5LEvG0U5MDyuQYfDY3zjFXVzA0HLlmtQSq
   # CODECOV_TOKEN:
@@ -76,3 +77,11 @@ after_build:
 artifacts:
   - path: $(deploymentfilename)
     name: datetimerangeparser
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
+  skip_symbols: true
+  artifact: /.*\.nupkg/
+  
