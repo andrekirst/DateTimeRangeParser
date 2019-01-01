@@ -30,6 +30,7 @@ matrix:
 
 environment:
   deploymentfilename: ""
+  nugetpkg: ""
   # nugetpkg: ""
   # SONARQUBE_TOKEN:
   #   secure: ACcdrpuhAnH8XDKRMUFdE4pjTH1vlH5LEvG0U5MDyuQYfDY3zjFXVzA0HLlmtQSq
@@ -83,4 +84,4 @@ deploy:
   api_key:
     secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
   skip_symbols: true
-  artifact: $env:APPVEYOR_BUILD_FOLDER\output\*.nupkg
+  artifact: "$env:APPVEYOR_BUILD_FOLDER\output\DateTimeRangeParser.1.0.0.nupkg"
