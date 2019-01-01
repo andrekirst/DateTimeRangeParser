@@ -29,7 +29,7 @@ matrix:
   fast_finish: true
 
 environment:
-  buildversion: {version}
+  buildversion: '{version}'
   deploymentfilename: ""
   nugetpkg: ""
   # nugetpkg: ""
