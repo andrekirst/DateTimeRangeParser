@@ -29,7 +29,6 @@ matrix:
   fast_finish: true
 
 environment:
-  buildversion: '{version}'
   deploymentfilename: ""
   nugetpkg: ""
   # nugetpkg: ""
@@ -54,7 +53,7 @@ build_script:
   - msbuild c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln /property:Configuration=Release /t:Rebuild /verbosity:minimal
   # - dotnet build "c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln"
   - dotnet test "c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.Tests\DateTimeRangeParser.Tests.csproj"
-  - dotnet pack C:\projects\DateTimeRangeParser\src\DateTimeRangeParser\DateTimeRangeParser.csproj -o c:\projects\DateTimeRangeParser\nuget_output -c Release /p:Version=$($env:buildversion)
+  - dotnet pack C:\projects\DateTimeRangeParser\src\DateTimeRangeParser\DateTimeRangeParser.csproj -o c:\projects\DateTimeRangeParser\nuget_output -c Release /p:Version=$($env:appveyor_build_version)
   # - ps: OpenCover.Console.exe -register -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"c:\projects\WordCount\WordCount.Tests\bin\Release\WordCount.Tests.dll -noshadow" -excludebyattribute:*ExcludeFromCodeCoverage* -filter:"+[*WordCount*]* -[*Tests*]*" -output:"c:\projects\WordCount\opencovertests.xml"
   # - ps: MSBuild.SonarQube.Runner.exe end /d:"sonar.login=$($env:SONARQUBE_TOKEN)"
   # - ps: codecov -f "c:\projects\WordCount\opencovertests.xml" -t $env:CODECOV_TOKEN
@@ -72,7 +71,7 @@ after_build:
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
   # - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\Autofac.xml" -Recurse
   - ps: 7z a $env:deploymentfilename "$env:APPVEYOR_BUILD_FOLDER\output\*.*" -r
-  - ps: $env:nugetpkg = 'nuget_output\DateTimeRangeParser.$($env:buildversion).nupkg'
+  - ps: $env:nugetpkg = 'nuget_output\DateTimeRangeParser.$($env:appveyor_build_version).nupkg'
 
 # on_success:
 #   - curl -s -o copilot https://copilot.blackducksoftware.com/ci/appveyor/scripts/upload
