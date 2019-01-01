@@ -5,6 +5,10 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+    <Authors>André Kirst</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
