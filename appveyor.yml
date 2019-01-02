@@ -65,7 +65,7 @@ test:
 after_build:
   - ps: if ($env:APPVEYOR_REPO_BRANCH -eq "master") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version).zip" }
   - ps: if ($env:APPVEYOR_PULL_REQUEST_NUMBER) { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-PR$env:APPVEYOR_PULL_REQUEST_NUMBER.zip" }
-  - ps: if ($env:APPVEYOR_REPO_BRANCH -like "feature*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-unstable.zip" }
+  - ps: if ($env:APPVEYOR_REPO_BRANCH -like "develop*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-unstable.zip" }
   - ps: New-Item -Type Directory -Path "$env:APPVEYOR_BUILD_FOLDER\output\"
   - ps: Copy-Item -Destination "$env:APPVEYOR_BUILD_FOLDER\output\" -Path "$env:APPVEYOR_BUILD_FOLDER\src\DateTimeRangeParser\bin\Release\*.*" -Recurse
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
