@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DateTimeRangeParser
 {
-    public class DateTimeRange
+    public class DateTimeRange :
+        IEquatable<DateTimeRange>,
+        IEnumerable<DateTime>
     {
         public DateTimeRange()
         {
@@ -24,7 +28,7 @@ namespace DateTimeRangeParser
                 IsValid = false
             };
 
-        public bool IsValid { get; set; }
+        public bool IsValid { get; protected set; }
 
         public DateTime Start { get; set; }
 
@@ -41,6 +45,54 @@ namespace DateTimeRangeParser
 
             return Start == other?.Start &&
                    End == other.End;
+        }
+
+        public bool Equals(DateTimeRange other)
+        {
+            return other != null &&
+                   IsValid == other.IsValid &&
+                   Start == other.Start &&
+                   End == other.End;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(IsValid, Start, End);
+        }
+
+        protected IEnumerable<DateTime> EnumerateFromStartToEnd()
+        {
+            if (End < Start)
+            {
+                yield break;
+            }
+            DateTime current = Start;
+            while (current <= End)
+            {
+                yield return current;
+                current = current.AddDays(value: 1);
+            }
+            yield break;
+        }
+
+        public IEnumerator<DateTime> GetEnumerator()
+        {
+            return EnumerateFromStartToEnd().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public static bool operator ==(DateTimeRange range1, DateTimeRange range2)
+        {
+            return EqualityComparer<DateTimeRange>.Default.Equals(range1, range2);
+        }
+
+        public static bool operator !=(DateTimeRange range1, DateTimeRange range2)
+        {
+            return !(range1 == range2);
         }
     }
 }
