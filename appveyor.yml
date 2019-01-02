@@ -52,14 +52,9 @@ before_build:
 build_script:
   - ps: $env:nuget_version = $($env:appveyor_build_version)
   - ps: echo $env:nuget_version
-  # - ps: MSBuild.SonarQube.Runner.exe begin /n:"WordCount" /k:"andrekirst:WordCount" /d:"sonar.organization=andrekirst-github" /d:"sonar.host.url=https://sonarcloud.io" /d:"sonar.login=$($env:SONARQUBE_TOKEN)" /v:"$($env:appveyor_build_version)" /d:"sonar.exclusions=**/AssemblyInfo.cs" /d:"sonar.branch.name=$env:APPVEYOR_REPO_BRANCH" /d:"sonar.dotnet.visualstudio.testProjectPattern=*.Tests" /d:sonar.cs.opencover.reportsPaths="$env:APPVEYOR_BUILD_FOLDER\opencovertests.xml" /d:sonar.cs.vstest.reportsPath="$env:APPVEYOR_BUILD_FOLDER\WordCount.Tests\bin\$env:CONFIGURATION\TestResults*.trx"
   - msbuild c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln /property:Configuration=Release /t:Rebuild /verbosity:minimal
-  # - dotnet build "c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln"
   - dotnet test "c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.Tests\DateTimeRangeParser.Tests.csproj"
   - ps: dotnet pack C:\projects\DateTimeRangeParser\src\DateTimeRangeParser\DateTimeRangeParser.csproj -o c:\projects\DateTimeRangeParser\nuget_output -c Release /p:Version="$($env:nuget_version)"
-  # - ps: OpenCover.Console.exe -register -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"c:\projects\WordCount\WordCount.Tests\bin\Release\WordCount.Tests.dll -noshadow" -excludebyattribute:*ExcludeFromCodeCoverage* -filter:"+[*WordCount*]* -[*Tests*]*" -output:"c:\projects\WordCount\opencovertests.xml"
-  # - ps: MSBuild.SonarQube.Runner.exe end /d:"sonar.login=$($env:SONARQUBE_TOKEN)"
-  # - ps: codecov -f "c:\projects\WordCount\opencovertests.xml" -t $env:CODECOV_TOKEN
 
 test:
   assemblies:
@@ -72,13 +67,8 @@ after_build:
   - ps: New-Item -Type Directory -Path "$env:APPVEYOR_BUILD_FOLDER\output\"
   - ps: Copy-Item -Destination "$env:APPVEYOR_BUILD_FOLDER\output\" -Path "$env:APPVEYOR_BUILD_FOLDER\src\DateTimeRangeParser\bin\Release\*.*" -Recurse
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
-  # - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\Autofac.xml" -Recurse
   - ps: 7z a $env:deploymentfilename "$env:APPVEYOR_BUILD_FOLDER\output\*.*" -r
   - ps: $env:nugetpkg = "nuget_output\DateTimeRangeParser.$($env:nuget_version).nupkg"
-
-# on_success:
-#   - curl -s -o copilot https://copilot.blackducksoftware.com/ci/appveyor/scripts/upload
-#   - bash copilot
 
 artifacts:
   - path: $(deploymentfilename)
@@ -87,8 +77,35 @@ artifacts:
     name: nugetpackage
 
 deploy:
-  provider: NuGet
-  api_key:
-    secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
-  skip_symbols: true
-  artifact: nugetpackage
+  - provider: NuGet
+    name: production
+    api_key:
+      secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
+    skip_symbols: true
+    artifact: nugetpackage
+    on:
+      branch: master
+  
+  - provider: GitHub
+    release: DateTimeRangeParser-v$(appveyor_build_version)
+    description: 'DateTimeRangeParser'
+    auth_token:
+      secure: wd4vJnE6p08rDjENYsCDpKlmGFr702mrdu5bYAiRge1aRDnEH2sp3/id+AQxavMJ
+    artifact: nugetpackage
+    draft: false
+    prerelease: false
+    on:
+      branch: master
+      APPVEYOR_REPO_TAG: true
+
+  - provider: GitHub
+    release: DateTimeRangeParser-v$(appveyor_build_version)-unstable
+    description: 'DateTimeRangeParser'
+    auth_token:
+      secure: wd4vJnE6p08rDjENYsCDpKlmGFr702mrdu5bYAiRge1aRDnEH2sp3/id+AQxavMJ
+    artifact: nugetpackage
+    draft: false
+    prerelease: true
+    on:
+      branch: develop
+      APPVEYOR_REPO_TAG: true
