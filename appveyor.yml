@@ -116,15 +116,15 @@ deploy:
       branch: develop
       # APPVEYOR_REPO_TAG: true
 
-  - provider: GitHub
-    tag: v$(appveyor_build_version)-rc
-    release: DateTimeRangeParser-v$(appveyor_build_version)-rc
-    description: 'DateTimeRangeParser'
-    auth_token:
-      secure: wd4vJnE6p08rDjENYsCDpKlmGFr702mrdu5bYAiRge1aRDnEH2sp3/id+AQxavMJ
-    artifact: nugetpackage
-    draft: true
-    prerelease: true
-    on:
-      branch: /release.*/
-      # APPVEYOR_REPO_TAG: true
+  # - provider: GitHub
+  #   tag: v$(appveyor_build_version)-rc
+  #   release: DateTimeRangeParser-v$(appveyor_build_version)-rc
+  #   description: 'DateTimeRangeParser'
+  #   auth_token:
+  #     secure: wd4vJnE6p08rDjENYsCDpKlmGFr702mrdu5bYAiRge1aRDnEH2sp3/id+AQxavMJ
+  #   artifact: nugetpackage
+  #   draft: true
+  #   prerelease: true
+  #   on:
+  #     branch: /release.*/
+  #     # APPVEYOR_REPO_TAG: true
