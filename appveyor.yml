@@ -85,8 +85,10 @@ deploy:
     artifact: nugetpackage
     on:
       branch: master
+      APPVEYOR_REPO_TAG: true
   
   - provider: GitHub
+    tag: v$(appveyor_build_version)
     release: DateTimeRangeParser-v$(appveyor_build_version)
     description: 'DateTimeRangeParser'
     auth_token:
@@ -96,8 +98,10 @@ deploy:
     prerelease: false
     on:
       branch: master
+      APPVEYOR_REPO_TAG: true
 
   - provider: GitHub
+    tag: v$(appveyor_build_version)-unstable
     release: DateTimeRangeParser-v$(appveyor_build_version)-unstable
     description: 'DateTimeRangeParser'
     auth_token:
@@ -107,3 +111,4 @@ deploy:
     prerelease: true
     on:
       branch: develop
+      APPVEYOR_REPO_TAG: true
