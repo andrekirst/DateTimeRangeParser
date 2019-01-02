@@ -39,7 +39,7 @@ namespace DateTimeRangeParser
 
         public override int GetHashCode()
         {
-            return Name?.GetHashCode() ?? string.Empty.GetHashCode();
+            return HashCode.Combine(Name);
         }
     }
 }

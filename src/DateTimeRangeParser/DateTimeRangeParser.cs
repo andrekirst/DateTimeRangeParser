@@ -12,6 +12,12 @@ namespace DateTimeRangeParser
 
         public event EventHandler<RaisedCalculationEventArgs> RaisedCalculation;
 
+        public DateTimeRangeParser()
+        {
+            _dateTimeProvider = new DefaultDateTimeProvider();
+            AddCalculators(new CalculationsLoader().LoadCalculations());
+        }
+
         public DateTimeRangeParser(
             IDateTimeProvider dateTimeProvider,
             List<DateTimeRangeCalculatorBase> calculators)
@@ -19,13 +25,6 @@ namespace DateTimeRangeParser
             _dateTimeProvider = dateTimeProvider;
             AddCalculators(calculators: calculators);
         }
-
-        //public static DateTimeRangeParser CreateDefault(List<CultureInfo> supportedCulsturesToLoad = null)
-        //{
-        //    return new DateTimeRangeParser(
-        //        dateTimeProvider: new DefaultDateTimeProvider(),
-        //        calculators: new CalculationsLoader().LoadCalculations(loadCulturesOf: supportedCulsturesToLoad));
-        //}
 
         private void AddCalculators(List<DateTimeRangeCalculatorBase> calculators)
         {
@@ -45,7 +44,7 @@ namespace DateTimeRangeParser
 
         public DateTimeRange Parse(string input)
         {
-            if (_cachedValues.ContainsKey(key: input))
+            if (ExistsCachedValue(cacheValue: input))
             {
                 return _cachedValues[key: input];
             }
@@ -70,17 +69,29 @@ namespace DateTimeRangeParser
             return calculatedValue;
         }
 
+        private bool ExistsCachedValue(string cacheValue)
+        {
+            return
+                CachingEnabled &&
+                _cachedValues.ContainsKey(key: cacheValue);
+        }
+
         private DateTimeRangeCalculatorBase GetImplementationByInput(string input)
         {
             return _calculators
                 .FirstOrDefault(predicate: c => c.DoesMatchInput(input: input));
         }
 
-        private void AddCalculatedValueToCache(string input, DateTimeRange calculatedValue)
+        private void AddCalculatedValueToCache(
+            string input,
+            DateTimeRange calculatedValue)
         {
-            _cachedValues.Add(
-                key: input,
-                value: calculatedValue);
+            if (CachingEnabled)
+            {
+                _cachedValues.Add(
+                        key: input,
+                        value: calculatedValue); 
+            }
         }
 
         private void OnRaisedCalculation(RaisedCalculationEventArgs raisedCalculationEventArgs)
@@ -95,5 +106,11 @@ namespace DateTimeRangeParser
                 .Select(selector: s => s.Name)
                 .ToList()
                 .AsReadOnly();
+
+        public IReadOnlyCollection<DateTimeRangeCalculatorBase> ImplementedCalculations
+            => _calculators
+            .AsReadOnly();
+
+        public bool CachingEnabled { get; set; } = true;
     }
 }
