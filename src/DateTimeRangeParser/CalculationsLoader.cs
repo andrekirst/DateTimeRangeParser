@@ -12,10 +12,10 @@ namespace DateTimeRangeParser
         {
             Type calculatorBaseType = typeof(DateTimeRangeCalculatorBase);
             return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(selector: s => s.GetTypes())
-                .Where(predicate: p => p.IsPublic)
-                .Where(predicate: p => !p.IsAbstract)
-                .Where(predicate: p => calculatorBaseType.IsAssignableFrom(c: p))
+                .SelectMany(selector: assembly => assembly.GetTypes())
+                .Where(predicate: type => type.IsPublic)
+                .Where(predicate: type => !type.IsAbstract)
+                .Where(predicate: type => calculatorBaseType.IsAssignableFrom(c: type))
                 .Select(selector: Activator.CreateInstance)
                 .Cast<DateTimeRangeCalculatorBase>()
                 .FilterBySupportedCultures(toLoadingCultures: loadCulturesOf)
