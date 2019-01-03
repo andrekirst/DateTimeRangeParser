@@ -51,5 +51,14 @@ namespace DateTimeRangeParser.Calculations
                 pattern: @"^CW([1-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-3])\.[0-9]{4,4}$",
                 options: RegexOptions.Compiled);
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "CW1.2019" };
+                yield return new CalculationExample { InputString = "CW13.2019" };
+            }
+        }
     }
 }

@@ -19,5 +19,13 @@ namespace DateTimeRangeParser.Calculations.Cultures.German
             {
                 CultureInfo.GetCultureInfoByIetfLanguageTag(name: "de")
             };
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "heute" };
+            }
+        }
     }
 }

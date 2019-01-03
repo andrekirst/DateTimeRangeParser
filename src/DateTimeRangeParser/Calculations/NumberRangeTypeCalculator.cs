@@ -62,11 +62,11 @@ namespace DateTimeRangeParser.Calculations
                 pattern: Pattern,
                 options: RegexOptions.Compiled)
                 .Cast<Match>()
-                .Select(s => s.Groups)
+                .Select(match => match.Groups)
                 .First()
-                .Select(s => s.Captures)
+                .Select(group => group.Captures)
                 .Skip(1)
-                .Select(s => s.First().Value)
+                .Select(captureCollection => captureCollection.First().Value)
                 .ToList();
         }
     }

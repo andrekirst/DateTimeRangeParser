@@ -50,5 +50,14 @@ namespace DateTimeRangeParser.Calculations
         public override bool NeedsOtherCalculations => true;
 
         public override List<CultureInfo> SupportedCultures => null;
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "yesterday->today" };
+                yield return new CalculationExample { InputString = "thisyear->today" };
+            }
+        }
     }
 }

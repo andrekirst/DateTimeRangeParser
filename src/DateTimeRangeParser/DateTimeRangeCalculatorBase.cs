@@ -26,6 +26,8 @@ namespace DateTimeRangeParser
         protected static bool EqualsLowerMatch(string input, string match)
             => input?.ToLower() == match?.ToLower();
 
+        public virtual IEnumerable<CalculationExample> Examples { get; }
+
         public override string ToString()
         {
             List<string> cultures = SupportedCultures?.Select(selector: s => s.EnglishName).ToList() ?? new List<string>();
