@@ -13,9 +13,14 @@ namespace DateTimeRangeParser
         public event EventHandler<RaisedCalculationEventArgs> RaisedCalculation;
 
         public DateTimeRangeParser()
+            : this(dateTimeProvider: new DefaultDateTimeProvider())
         {
-            _dateTimeProvider = new DefaultDateTimeProvider();
-            AddCalculators(new CalculationsLoader().LoadCalculations());
+        }
+
+        public DateTimeRangeParser(IDateTimeProvider dateTimeProvider)
+            : this(dateTimeProvider: dateTimeProvider,
+                  calculators: new CalculationsLoader().LoadCalculations())
+        {
         }
 
         public DateTimeRangeParser(
