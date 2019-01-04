@@ -69,5 +69,20 @@ namespace DateTimeRangeParser.Calculations
                 .Select(captureCollection => captureCollection.First().Value)
                 .ToList();
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "1d" };
+                yield return new CalculationExample { InputString = "-1d" };
+                yield return new CalculationExample { InputString = "1w" };
+                yield return new CalculationExample { InputString = "-1w" };
+                yield return new CalculationExample { InputString = "1m" };
+                yield return new CalculationExample { InputString = "-1m" };
+                yield return new CalculationExample { InputString = "1y" };
+                yield return new CalculationExample { InputString = "-1y" };
+            }
+        }
     }
 }

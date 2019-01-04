@@ -57,6 +57,7 @@ namespace DateTimeRangeParser.Calculations
             {
                 yield return new CalculationExample { InputString = "yesterday->today" };
                 yield return new CalculationExample { InputString = "thisyear->today" };
+                yield return new CalculationExample { InputString = "-6d->today" };
             }
         }
     }

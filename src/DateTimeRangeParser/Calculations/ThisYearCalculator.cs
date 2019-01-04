@@ -29,5 +29,13 @@ namespace DateTimeRangeParser.Calculations
                 input: input,
                 match: "thisyear");
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "thisyear" };
+            }
+        }
     }
 }
