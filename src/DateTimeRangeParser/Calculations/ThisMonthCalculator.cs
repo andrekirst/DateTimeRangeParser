@@ -32,5 +32,13 @@ namespace DateTimeRangeParser.Calculations
                 input: input,
                 match: "thismonth");
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "thismonth" };
+            }
+        }
     }
 }

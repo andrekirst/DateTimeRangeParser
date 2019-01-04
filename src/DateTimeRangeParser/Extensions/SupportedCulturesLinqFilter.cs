@@ -12,10 +12,10 @@ namespace DateTimeRangeParser.Extensions
         {
             if (toLoadingCultures != null && toLoadingCultures.Any())
             {
-                return calculations.Where(predicate: b =>
-                    b.SupportedCultures == null ||
-                    b.SupportedCultures.Intersect(second: toLoadingCultures).Any() ||
-                    b.SupportedCultures.Intersect(second: toLoadingCultures.Select(selector: s => s.Parent)).Any());
+                return calculations.Where(predicate: calculator =>
+                    calculator.SupportedCultures == null ||
+                    calculator.SupportedCultures.Intersect(second: toLoadingCultures).Any() ||
+                    calculator.SupportedCultures.Intersect(second: toLoadingCultures.Select(selector: s => s.Parent)).Any());
             }
             return calculations;
         }

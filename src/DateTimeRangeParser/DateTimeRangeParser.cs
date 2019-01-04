@@ -76,8 +76,7 @@ namespace DateTimeRangeParser
 
         private bool ExistsCachedValue(string cacheValue)
         {
-            return
-                CachingEnabled &&
+            return CachingEnabled &&
                 _cachedValues.ContainsKey(key: cacheValue);
         }
 

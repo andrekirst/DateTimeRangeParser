@@ -28,5 +28,13 @@ namespace DateTimeRangeParser.Calculations
                 input: input,
                 match: "today");
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "today" };
+            }
+        }
     }
 }

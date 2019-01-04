@@ -29,5 +29,13 @@ namespace DateTimeRangeParser.Calculations
         {
             return EqualsLowerMatch(input: input, match: "lastweek");
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "lastweek" };
+            }
+        }
     }
 }

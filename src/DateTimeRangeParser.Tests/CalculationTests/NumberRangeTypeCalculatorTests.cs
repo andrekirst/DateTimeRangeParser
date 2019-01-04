@@ -1,10 +1,8 @@
 ﻿using DateTimeRangeParser.Calculations;
 using Moq;
 using System;
-using System.Linq;
 using Xunit;
 using Shouldly;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DateTimeRangeParser.Tests.CalculationTests
