@@ -20,6 +20,20 @@ namespace DateTimeRangeParser
             End = end;
         }
 
+        public DateTimeRange SpreadByDays(int days)
+        {
+            return SpreadByDays(
+                daysStart: 1,
+                daysEnd: 1);
+        }
+
+        public DateTimeRange SpreadByDays(int daysStart, int daysEnd)
+        {
+            return new DateTimeRange(
+                start: Start.AddDays(-daysStart),
+                end: End.AddDays(daysEnd));
+        }
+
         public static DateTimeRange Empty =>
             new DateTimeRange(
                 start: DateTime.MinValue,
@@ -33,6 +47,11 @@ namespace DateTimeRangeParser
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }
+
+        public TimeSpan TimeSpan =>
+            Start >= End
+            ? End - Start
+            : TimeSpan.MinValue;
 
         public override string ToString()
         {
