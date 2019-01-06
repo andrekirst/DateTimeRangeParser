@@ -23,8 +23,27 @@ namespace DateTimeRangeParser
         public DateTimeRange SpreadByDays(int days)
         {
             return SpreadByDays(
-                daysStart: 1,
-                daysEnd: 1);
+                daysStart: days,
+                daysEnd: days);
+        }
+
+        public DateTimeRange SpreadByWeeks(int weeks)
+        {
+            return SpreadByDays(days: weeks * 7);
+        }
+
+        public DateTimeRange SpreadByMonths(int months)
+        {
+            return new DateTimeRange(
+                start: Start.AddMonths(-months),
+                end: End.AddMonths(months));
+        }
+
+        public DateTimeRange SpreadByWeeks(int weeksStart, int weeksEnd)
+        {
+            return SpreadByDays(
+                daysStart: weeksStart * 7,
+                daysEnd: weeksEnd * 7);
         }
 
         public DateTimeRange SpreadByDays(int daysStart, int daysEnd)
