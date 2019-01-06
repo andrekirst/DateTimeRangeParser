@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DateTimeRangeParser.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -27,6 +28,11 @@ namespace DateTimeRangeParser
                 daysEnd: days);
         }
 
+        public bool IsDateTimeBetween(DateTime dateTime)
+        {
+            return dateTime.Between(this);
+        }
+
         public DateTimeRange SpreadByWeeks(int weeks)
         {
             return SpreadByDays(days: weeks * 7);
@@ -34,9 +40,16 @@ namespace DateTimeRangeParser
 
         public DateTimeRange SpreadByMonths(int months)
         {
+            return SpreadByMonths(
+                monthsStart: months,
+                monthsEnd: months);
+        }
+
+        public DateTimeRange SpreadByDays(int daysStart, int daysEnd)
+        {
             return new DateTimeRange(
-                start: Start.AddMonths(-months),
-                end: End.AddMonths(months));
+                start: Start.AddDays(-daysStart),
+                end: End.AddDays(daysEnd));
         }
 
         public DateTimeRange SpreadByWeeks(int weeksStart, int weeksEnd)
@@ -46,11 +59,25 @@ namespace DateTimeRangeParser
                 daysEnd: weeksEnd * 7);
         }
 
-        public DateTimeRange SpreadByDays(int daysStart, int daysEnd)
+        public DateTimeRange SpreadByMonths(int monthsStart, int monthsEnd)
         {
             return new DateTimeRange(
-                start: Start.AddDays(-daysStart),
-                end: End.AddDays(daysEnd));
+                   start: Start.AddMonths(-monthsStart),
+                   end: End.AddMonths(monthsEnd));
+        }
+
+        public DateTimeRange SpreadByYears(int years)
+        {
+            return SpreadByYears(
+                yearsStart: years,
+                yearsEnd: years);
+        }
+
+        public DateTimeRange SpreadByYears(int yearsStart, int yearsEnd)
+        {
+            return new DateTimeRange(
+                start: Start.AddYears(-yearsStart),
+                end: End.AddYears(yearsEnd));
         }
 
         public static DateTimeRange Empty =>
@@ -131,6 +158,16 @@ namespace DateTimeRangeParser
         public static bool operator !=(DateTimeRange range1, DateTimeRange range2)
         {
             return !(range1 == range2);
+        }
+
+        public static DateTimeRange operator ++(DateTimeRange dateTimeRange)
+        {
+            return dateTimeRange.SpreadByDays(days: 1);
+        }
+
+        public static DateTimeRange operator --(DateTimeRange dateTimeRange)
+        {
+            return dateTimeRange.SpreadByDays(days: -1);
         }
     }
 }

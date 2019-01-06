@@ -79,5 +79,40 @@ namespace DateTimeRangeParser.Tests.DateTimeRangeTests
             actual.Start.ShouldBe(new DateTime(2018, 12, 5));
             actual.End.ShouldBe(new DateTime(2019, 2, 6));
         }
+
+        [Fact]
+        public void Spread_2_Months_for_Start_and_3_Month_for_End()
+        {
+            DateTimeRange range = new DateTimeRange(
+                new DateTime(2019, 1, 5),
+                new DateTime(2019, 1, 6));
+            DateTimeRange actual = range.SpreadByMonths(monthsStart: 2, monthsEnd: 3);
+            actual.Start.ShouldBe(new DateTime(2018, 11, 5));
+            actual.End.ShouldBe(new DateTime(2019, 4, 6));
+        }
+
+        [Fact]
+        public void Spread_1_Year()
+        {
+            DateTimeRange range = new DateTimeRange(
+                new DateTime(2019, 1, 5),
+                new DateTime(2019, 1, 6));
+
+            DateTimeRange actual = range.SpreadByYears(years: 1);
+            actual.Start.ShouldBe(new DateTime(2018, 1, 5));
+            actual.End.ShouldBe(new DateTime(2020, 1, 6));
+        }
+
+        [Fact]
+        public void Spread_2_Years_for_Start_and_3_Years_for_End()
+        {
+            DateTimeRange range = new DateTimeRange(
+                new DateTime(2019, 1, 5),
+                new DateTime(2019, 1, 6));
+
+            DateTimeRange actual = range.SpreadByYears(yearsStart: 2, yearsEnd: 3);
+            actual.Start.ShouldBe(new DateTime(2017, 1, 5));
+            actual.End.ShouldBe(new DateTime(2022, 1, 6));
+        }
     }
 }
