@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DateTimeRangeParser.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,6 +21,65 @@ namespace DateTimeRangeParser
             End = end;
         }
 
+        public DateTimeRange SpreadByDays(int days)
+        {
+            return SpreadByDays(
+                daysStart: days,
+                daysEnd: days);
+        }
+
+        public bool IsDateTimeBetween(DateTime dateTime)
+        {
+            return dateTime.Between(this);
+        }
+
+        public DateTimeRange SpreadByWeeks(int weeks)
+        {
+            return SpreadByDays(days: weeks * 7);
+        }
+
+        public DateTimeRange SpreadByMonths(int months)
+        {
+            return SpreadByMonths(
+                monthsStart: months,
+                monthsEnd: months);
+        }
+
+        public DateTimeRange SpreadByDays(int daysStart, int daysEnd)
+        {
+            return new DateTimeRange(
+                start: Start.AddDays(-daysStart),
+                end: End.AddDays(daysEnd));
+        }
+
+        public DateTimeRange SpreadByWeeks(int weeksStart, int weeksEnd)
+        {
+            return SpreadByDays(
+                daysStart: weeksStart * 7,
+                daysEnd: weeksEnd * 7);
+        }
+
+        public DateTimeRange SpreadByMonths(int monthsStart, int monthsEnd)
+        {
+            return new DateTimeRange(
+                   start: Start.AddMonths(-monthsStart),
+                   end: End.AddMonths(monthsEnd));
+        }
+
+        public DateTimeRange SpreadByYears(int years)
+        {
+            return SpreadByYears(
+                yearsStart: years,
+                yearsEnd: years);
+        }
+
+        public DateTimeRange SpreadByYears(int yearsStart, int yearsEnd)
+        {
+            return new DateTimeRange(
+                start: Start.AddYears(-yearsStart),
+                end: End.AddYears(yearsEnd));
+        }
+
         public static DateTimeRange Empty =>
             new DateTimeRange(
                 start: DateTime.MinValue,
@@ -33,6 +93,11 @@ namespace DateTimeRangeParser
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }
+
+        public TimeSpan TimeSpan =>
+            Start >= End
+            ? End - Start
+            : TimeSpan.MinValue;
 
         public override string ToString()
         {
@@ -93,6 +158,16 @@ namespace DateTimeRangeParser
         public static bool operator !=(DateTimeRange range1, DateTimeRange range2)
         {
             return !(range1 == range2);
+        }
+
+        public static DateTimeRange operator ++(DateTimeRange dateTimeRange)
+        {
+            return dateTimeRange.SpreadByDays(days: 1);
+        }
+
+        public static DateTimeRange operator --(DateTimeRange dateTimeRange)
+        {
+            return dateTimeRange.SpreadByDays(days: -1);
         }
     }
 }

@@ -12,5 +12,11 @@ namespace DateTimeRangeParser.Extensions
             }
             return dateTime;
         }
+
+        public static bool Between(this DateTime dateTime, DateTimeRange dateTimeRange)
+        {
+            return dateTime >= dateTimeRange.Start &&
+                dateTime <= dateTimeRange.End;
+        }
     }
 }
