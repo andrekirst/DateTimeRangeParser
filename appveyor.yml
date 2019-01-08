@@ -1,7 +1,7 @@
 # Erweiterte Dokumentation: https://www.appveyor.com/docs/appveyor-yml/
 
 # Version festlegen
-version: 1.0.{build}
+version: 1.1.{build}
 
 clone_folder: c:\projects\DateTimeRangeParser
 
@@ -34,19 +34,6 @@ environment:
   deploymentfilename: ""
   nugetpkg: ""
   nuget_version: ""
-  # nugetpkg: ""
-  # SONARQUBE_TOKEN:
-  #   secure: ACcdrpuhAnH8XDKRMUFdE4pjTH1vlH5LEvG0U5MDyuQYfDY3zjFXVzA0HLlmtQSq
-  # CODECOV_TOKEN:
-  #   secure: xD2Si76xwqwDjnJOB1w1SjTtiogJX9xn9fJbXXqlzyYAt3/32El2hxE3GW22Xu0X
-  # COVERALLS_REPO_TOKEN:
-    # secure: bfX6ISggSBc6AHPqmjFB4CG6xYnpU3mZbJEGtVvbd+XO16NZBd3IUeLvmFyCLhuC
-
-install:
-  # - choco install "msbuild-sonarqube-runner" -y
-  # - choco install xunit -y
-  # - choco install opencover.portable -y
-  # - choco install codecov -y
 
 before_build:
   - nuget restore c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln
@@ -65,7 +52,9 @@ test:
 after_build:
   - ps: if ($env:APPVEYOR_REPO_BRANCH -eq "master") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version).zip" }
   - ps: if ($env:APPVEYOR_PULL_REQUEST_NUMBER) { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-PR$env:APPVEYOR_PULL_REQUEST_NUMBER.zip" }
-  - ps: if ($env:APPVEYOR_REPO_BRANCH -like "feature*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-unstable.zip" }
+  - ps: if ($env:APPVEYOR_REPO_BRANCH -like "develop*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-unstable.zip" }
+  - ps: if ($env:APPVEYOR_REPO_BRANCH -like "release*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-rc.zip" }
+  - ps: if ($env:APPVEYOR_REPO_BRANCH -like "feature*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-feature.zip" }
   - ps: New-Item -Type Directory -Path "$env:APPVEYOR_BUILD_FOLDER\output\"
   - ps: Copy-Item -Destination "$env:APPVEYOR_BUILD_FOLDER\output\" -Path "$env:APPVEYOR_BUILD_FOLDER\src\DateTimeRangeParser\bin\Release\*.*" -Recurse
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
@@ -80,7 +69,6 @@ artifacts:
 
 deploy:
   - provider: NuGet
-    name: production
     api_key:
       secure: FgHRiTDaSEVn5P2wfCIs2u4J6a6t0zIxxqt2Rce/I5v7GE0QcDwLTP3MmSyHBrrA
     skip_symbols: true
@@ -88,7 +76,7 @@ deploy:
     on:
       branch: master
       # APPVEYOR_REPO_TAG: true
-  
+
   - provider: GitHub
     tag: v$(appveyor_build_version)
     release: DateTimeRangeParser-v$(appveyor_build_version)
@@ -113,4 +101,17 @@ deploy:
     prerelease: true
     on:
       branch: develop
+      # APPVEYOR_REPO_TAG: true
+
+  - provider: GitHub
+    tag: v$(appveyor_build_version)-rc
+    release: DateTimeRangeParser-v$(appveyor_build_version)-rc
+    description: 'DateTimeRangeParser'
+    auth_token:
+      secure: wd4vJnE6p08rDjENYsCDpKlmGFr702mrdu5bYAiRge1aRDnEH2sp3/id+AQxavMJ
+    artifact: nugetpackage
+    draft: true
+    prerelease: true
+    on:
+      branch: /release.*/
       # APPVEYOR_REPO_TAG: true

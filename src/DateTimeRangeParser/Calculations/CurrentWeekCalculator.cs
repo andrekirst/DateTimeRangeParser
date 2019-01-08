@@ -31,5 +31,13 @@ namespace DateTimeRangeParser.Calculations
                 input: input,
                 match: "currentweek");
         }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "currentweek" };
+            }
+        }
     }
 }

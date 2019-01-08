@@ -26,9 +26,15 @@ namespace DateTimeRangeParser
         protected static bool EqualsLowerMatch(string input, string match)
             => input?.ToLower() == match?.ToLower();
 
+        public virtual IEnumerable<CalculationExample> Examples { get; }
+
         public override string ToString()
         {
-            return $"{Name} - ({string.Join(separator: ", ", values: SupportedCultures.Select(selector: s => s.EnglishName))})";
+            List<string> cultures = SupportedCultures?.Select(selector: s => s.EnglishName).ToList() ?? new List<string>();
+            string culturesText = cultures.Any()
+                ? $" - ({ string.Join(separator: ", ", values: cultures)})"
+                : " - No specific Culture";
+            return $"{Name}{culturesText}";
         }
 
         public override bool Equals(object obj)
@@ -39,7 +45,7 @@ namespace DateTimeRangeParser
 
         public override int GetHashCode()
         {
-            return Name?.GetHashCode() ?? string.Empty.GetHashCode();
+            return HashCode.Combine(Name);
         }
     }
 }

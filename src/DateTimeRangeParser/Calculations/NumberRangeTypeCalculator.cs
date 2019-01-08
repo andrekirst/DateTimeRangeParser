@@ -62,12 +62,27 @@ namespace DateTimeRangeParser.Calculations
                 pattern: Pattern,
                 options: RegexOptions.Compiled)
                 .Cast<Match>()
-                .Select(s => s.Groups)
+                .Select(match => match.Groups)
                 .First()
-                .Select(s => s.Captures)
+                .Select(group => group.Captures)
                 .Skip(1)
-                .Select(s => s.First().Value)
+                .Select(captureCollection => captureCollection.First().Value)
                 .ToList();
+        }
+
+        public override IEnumerable<CalculationExample> Examples
+        {
+            get
+            {
+                yield return new CalculationExample { InputString = "1d" };
+                yield return new CalculationExample { InputString = "-1d" };
+                yield return new CalculationExample { InputString = "1w" };
+                yield return new CalculationExample { InputString = "-1w" };
+                yield return new CalculationExample { InputString = "1m" };
+                yield return new CalculationExample { InputString = "-1m" };
+                yield return new CalculationExample { InputString = "1y" };
+                yield return new CalculationExample { InputString = "-1y" };
+            }
         }
     }
 }
