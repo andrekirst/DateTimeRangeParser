@@ -1,7 +1,7 @@
 # Erweiterte Dokumentation: https://www.appveyor.com/docs/appveyor-yml/
 
 # Version festlegen
-version: 1.0.{build}
+version: 1.1.{build}
 
 clone_folder: c:\projects\DateTimeRangeParser
 
@@ -34,19 +34,6 @@ environment:
   deploymentfilename: ""
   nugetpkg: ""
   nuget_version: ""
-  # nugetpkg: ""
-  # SONARQUBE_TOKEN:
-  #   secure: ACcdrpuhAnH8XDKRMUFdE4pjTH1vlH5LEvG0U5MDyuQYfDY3zjFXVzA0HLlmtQSq
-  # CODECOV_TOKEN:
-  #   secure: xD2Si76xwqwDjnJOB1w1SjTtiogJX9xn9fJbXXqlzyYAt3/32El2hxE3GW22Xu0X
-  # COVERALLS_REPO_TOKEN:
-    # secure: bfX6ISggSBc6AHPqmjFB4CG6xYnpU3mZbJEGtVvbd+XO16NZBd3IUeLvmFyCLhuC
-
-install:
-  # - choco install "msbuild-sonarqube-runner" -y
-  # - choco install xunit -y
-  # - choco install opencover.portable -y
-  # - choco install codecov -y
 
 before_build:
   - nuget restore c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln
