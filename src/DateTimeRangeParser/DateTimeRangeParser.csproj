@@ -2,9 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <ApplicationIcon />
-    <StartupObject />
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>14</LangVersion>
     <Authors>André Kirst</Authors>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -12,9 +11,5 @@
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>DateTimeRangeParserKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
-  </ItemGroup>
 
 </Project>

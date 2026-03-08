@@ -7,8 +7,8 @@ clone_folder: c:\projects\DateTimeRangeParser
 
 skip_branch_with_pr: false
 
-# VM-Template für Visual Studio 2017
-image: Visual Studio 2017
+# VM-Template für Visual Studio 2022
+image: Visual Studio 2022
 
 skip_tags: true
 
@@ -24,9 +24,6 @@ dotnet_csproj:
 platform: Any CPU
 configuration: Release
 
-cache:
-  - packages -> **\packages.config
-
 matrix:
   fast_finish: true
 
@@ -36,13 +33,13 @@ environment:
   nuget_version: ""
 
 before_build:
-  - nuget restore c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln
+  - dotnet restore c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln
 
 build_script:
   - ps: $env:nuget_version = $($env:appveyor_build_version)
   - ps: echo $env:nuget_version
-  - msbuild c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln /property:Configuration=Release /t:Rebuild /verbosity:minimal
-  - dotnet test "c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.Tests\DateTimeRangeParser.Tests.csproj"
+  - dotnet build c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.sln --configuration Release --no-restore
+  - dotnet test "c:\projects\DateTimeRangeParser\src\DateTimeRangeParser.Tests\DateTimeRangeParser.Tests.csproj" --no-build
   - ps: dotnet pack C:\projects\DateTimeRangeParser\src\DateTimeRangeParser\DateTimeRangeParser.csproj -o c:\projects\DateTimeRangeParser\nuget_output -c Release /p:Version="$($env:nuget_version)"
 
 test:
@@ -56,7 +53,7 @@ after_build:
   - ps: if ($env:APPVEYOR_REPO_BRANCH -like "release*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-rc.zip" }
   - ps: if ($env:APPVEYOR_REPO_BRANCH -like "feature*") { $env:deploymentfilename = "datetimerangeparser-$($env:appveyor_build_version)-feature.zip" }
   - ps: New-Item -Type Directory -Path "$env:APPVEYOR_BUILD_FOLDER\output\"
-  - ps: Copy-Item -Destination "$env:APPVEYOR_BUILD_FOLDER\output\" -Path "$env:APPVEYOR_BUILD_FOLDER\src\DateTimeRangeParser\bin\Release\*.*" -Recurse
+  - ps: Copy-Item -Destination "$env:APPVEYOR_BUILD_FOLDER\output\" -Path "$env:APPVEYOR_BUILD_FOLDER\src\DateTimeRangeParser\bin\Release\net10.0\*.*" -Recurse
   - ps: rm "$env:APPVEYOR_BUILD_FOLDER\output\*.pdb" -Recurse
   - ps: 7z a $env:deploymentfilename "$env:APPVEYOR_BUILD_FOLDER\output\*.*" -r
   - ps: $env:nugetpkg = "nuget_output\DateTimeRangeParser.$($env:nuget_version).nupkg"

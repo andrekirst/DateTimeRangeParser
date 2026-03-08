@@ -64,9 +64,10 @@ namespace DateTimeRangeParser.Calculations
                 .Cast<Match>()
                 .Select(match => match.Groups)
                 .First()
+                .Cast<Group>()
                 .Select(group => group.Captures)
                 .Skip(1)
-                .Select(captureCollection => captureCollection.First().Value)
+                .Select(captureCollection => captureCollection.Cast<Capture>().First().Value)
                 .ToList();
         }
 
